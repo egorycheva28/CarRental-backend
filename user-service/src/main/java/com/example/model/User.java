@@ -5,6 +5,8 @@ import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -46,13 +48,13 @@ public class User {
     @NotNull(message = "Номер телефона - это обязательное поле")
     @Column(name = "phone", unique = true, nullable = false)
     @Pattern(regexp = "^7[0-9]{10}$", message = "Номер телефона должен состоять из 11 цифр и начинаться с 7.")
-    private String Phone;
+    private String phone;
 
     @NotNull(message = "Почта - это обязательное поле")
     @Column(name = "email", unique = true, nullable = false)
     @Email(message = "Email не соответствует стандартной маске почты")
     //@Pattern(regexp = "")
-    private String Email;
+    private String email;
 
     @NotNull(message = "Пароль - это обязательное поле")
     @Column(name = "password", nullable = false, length = 66)
@@ -60,4 +62,11 @@ public class User {
     //@Pattern(regexp = "")
     private String Password;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles = new HashSet<>();
 }

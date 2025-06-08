@@ -1,6 +1,7 @@
 package com.example.mapper;
 
 import com.example.dto.requests.RegisterUser;
+import com.example.dto.response.GetUser;
 import com.example.model.User;
 
 public class UserMapper {
@@ -18,5 +19,17 @@ public class UserMapper {
         return user;
     }
 
-    //public static GetUser getUser(User user){}
+    public static GetUser getUser(User user) {
+        return new GetUser(
+                user.getId(),
+                user.getCreateDate(),
+                user.getEditDate(),
+                user.getLastName(),
+                user.getFirstName(),
+                user.getMiddleName(),
+                user.getAge(),
+                user.getPhone(),
+                user.getEmail()
+        );
+    }
 }

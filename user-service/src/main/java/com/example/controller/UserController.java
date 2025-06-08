@@ -3,6 +3,8 @@ package com.example.controller;
 import com.example.dto.requests.EditUser;
 import com.example.dto.requests.LoginUser;
 import com.example.dto.requests.RegisterUser;
+import com.example.dto.response.GetToken;
+import com.example.dto.response.GetUser;
 import com.example.model.User;
 import com.example.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +27,7 @@ public class UserController {
     }
 
     @PostMapping("login")
-    public UUID loginUser(@RequestBody LoginUser data) {
+    public GetToken loginUser(@RequestBody LoginUser data) {
         return userService.loginuser(data);
     }
 
@@ -40,7 +42,7 @@ public class UserController {
     }
 
     @GetMapping("profile/{id}")
-    public User getProfileById(@PathVariable(name = "id") UUID id) {
+    public GetUser getProfileById(@PathVariable(name = "id") UUID id) {
         return userService.getProfileById(id);
     }
 
@@ -53,4 +55,6 @@ public class UserController {
     public String editUser(@RequestBody EditUser data, @PathVariable(name = "id") UUID id) {
         return userService.editUser(data, id);
     }
+
+    //refershToken без авторизации
 }

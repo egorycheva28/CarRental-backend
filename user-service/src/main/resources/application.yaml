@@ -1,11 +1,15 @@
 server:
   port: 8080
 
+jwt:
+  secret: r1Wq3Y7Ql8ivrpC4A6vEgBg1kllCKCrFkwhbZUNZ6Y8=
+  lifetime: 30m
+  refresh:
+    expiration: 1d
+
 spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/user-service
-    username: postgres
-    password: postgres
+  application:
+    name: user-service
 
   jpa:
     show-sql: true
@@ -13,6 +17,11 @@ spring:
       hibernate:
         format_sql: true
         ddl-auto: validate
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/user-service
+    username: postgres
+    password: postgres
 
   flyway:
     enabled: true
