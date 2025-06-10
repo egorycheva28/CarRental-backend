@@ -1,5 +1,7 @@
 package com.example.security.services;
 
+import com.example.dto.requests.RefreshTokenRequest;
+import com.example.dto.response.GetToken;
 import com.example.exception.UserNotFoundException;
 import com.example.model.RefreshToken;
 import com.example.model.User;
@@ -42,6 +44,10 @@ public class RefreshTokenService {
         return refreshToken;
     }
 
+    /*public GetToken refreshToken(RefreshTokenRequest refreshTokenRequest){
+
+        return new GetToken();
+    }*/
 
     /*public RefreshToken verifyExpiration(RefreshToken token) {
         if (token.getExpiryDate().compareTo(Instant.now()) < 0) {

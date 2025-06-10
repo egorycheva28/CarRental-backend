@@ -23,21 +23,19 @@ public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
     //@Value("${jwt.secret}")
-    private String jwtSecret="r1Wq3Y7Ql8ivrpC4A6vEgBg1kllCKCrFkwhbZUNZ6Y8=";
+    private String jwtSecret = "r1Wq3Y7Ql8ivrpC4A6vEgBg1kllCKCrFkwhbZUNZ6Y8=";
 
     //@Value("${bezkoder.app.jwtExpirationMs}")
-    private int jwtExpirationMs=1800000;
+    private int jwtExpirationMs = 1800000;
 
+    public String generateJwtToken(Authentication authentication) {//Authentication authentication User user из логина почту берем для токена
 
-
-    public String generateJwtToken(User user) {//Authentication authentication User user из логина почту берем для токена
-
-        //UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
+        UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
 
         return Jwts.builder()
                 //.setSubject((userPrincipal.getUsername()))
-                .setSubject(user.getEmail())
-                .claim("userId", user.getId())
+                .setSubject(userPrincipal.getEmail())
+                .claim("userId", userPrincipal.getId())
                 .setIssuedAt(new Date())//дата создания токена
                 .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))//дата конца токена
                 .signWith(key(), SignatureAlgorithm.HS256)

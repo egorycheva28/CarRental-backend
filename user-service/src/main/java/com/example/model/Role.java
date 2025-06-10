@@ -14,14 +14,10 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private UUID Id;
+    private UUID id;
 
-    @ManyToOne
-    @JoinColumn(name="user_id", nullable = false)
-    private User user;
-
+    @Enumerated(EnumType.STRING)
     @NotNull(message = "Роль - это обязательное поле")
     @Column(name = "role", nullable = false)
-    private Roles Role;
-
+    private Roles role;
 }
