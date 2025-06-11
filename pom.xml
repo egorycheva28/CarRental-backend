@@ -23,7 +23,8 @@
 	</developers>
 	<modules>
 		<module>user-service</module>
-	</modules>
+        <module>api-gateway</module>
+    </modules>
 	<scm>
 		<connection/>
 		<developerConnection/>
