@@ -24,7 +24,8 @@
 	<modules>
 		<module>user-service</module>
         <module>api-gateway</module>
-    </modules>
+		<module>car-service</module>
+	</modules>
 	<scm>
 		<connection/>
 		<developerConnection/>
