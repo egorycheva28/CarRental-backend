@@ -9,10 +9,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>car-service</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>car-service</name>
-    <description>car-service</description>
+    <artifactId>payment-service</artifactId>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>

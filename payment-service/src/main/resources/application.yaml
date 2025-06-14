@@ -1,0 +1,23 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: payment-service
+
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        ddl-auto: validate
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/payment-service
+    username: postgres
+    password: postgres
+
+  flyway:
+    enabled: true
+    locations:
+      - db.migration
