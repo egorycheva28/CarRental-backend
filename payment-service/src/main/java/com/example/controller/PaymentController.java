@@ -30,10 +30,10 @@ public class PaymentController {
 
     //Оплата платежа
 //админ
-    @PutMapping("/{id}")
+   /* @PutMapping("/{id}")
     public SuccessResponse statusPaid(@PathVariable(name = "id") UUID carId, StatusPayment status) {
         return paymentService.statusPaid(carId, status);
-    }
+    }*/
     //Отмена неоплаченного платежа
 
     //Получение данных о платеже

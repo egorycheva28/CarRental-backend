@@ -62,8 +62,8 @@ public class PaymentServiceImpl implements PaymentService {
         return PaymentMapper.getPayment(payment);
     }
 
-    @Override
+    /*@Override
     public GetPayment statusPaid(){
 
-    }
+    }*/
 }

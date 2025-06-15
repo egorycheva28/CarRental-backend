@@ -6,26 +6,21 @@ import com.example.dto.response.AvailabilityBookingResponse;
 import com.example.dto.response.GetBooking;
 import com.example.dto.response.ListBookings;
 import com.example.dto.response.SuccessResponse;
-import com.example.exception.AvailabilityException;
 import com.example.exception.PaginationException;
-import com.example.exception.BookingNotFoundException;
 import com.example.mapper.BookingMapper;
 import com.example.model.Booking;
 import com.example.repository.BookingRepository;
-import com.example.service.BookingService;
+//import com.example.service.BookingService;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import com.example.carservice.repository.CarRepository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@Service
+/*@Service
 @RequiredArgsConstructor
 public class BookingServiceImpl implements BookingService {
 
@@ -75,23 +70,23 @@ public class BookingServiceImpl implements BookingService {
         bookingRepository.save(booking);
 
         // Обновить статус автомобиля
-        /*Car car = booking.getCar();
-        car.setStatus(Status.FREE);
-        carRepository.save(car);*/
+        //Car car = booking.getCar();
+        //car.setStatus(Status.FREE);
+        //carRepository.save(car);
         return new SuccessResponse("Аренда успешно завершена!");
-    }
+    }*/
 
     //все
-    @Override
-    public ListBookings getPayments(Authentication authentication, StatusPayment statusPayment, Long size, Long
+    /*@Override
+    public ListBookings getCarHistory(Authentication authentication, Long size, Long
             current) {
-        List<Payment> payments = (List<Payment>) paymentRepository.findAll();
+        List<Booking> payments = (List<Booking>) bookingRepository.findAll();
 
         List<GetBooking> filterPayments = new ArrayList<>();//отфильтрованный список
 
         //фильтрация
-        for (Payment payment : payments) {
-            if (statusPayment == null || statusPayment.equals(payment.getStatus())) {
+        for (Booking booking : bookings) {
+            if (statusPayment == null || statusPayment.equals(booking.getStatus())) {
                 filterPayments.add(PaymentMapper.getPayment(payment));
             }
         }
@@ -108,6 +103,7 @@ public class BookingServiceImpl implements BookingService {
         List<GetBooking> currentPayments = filterPayments.stream().skip((current - 1) * size).limit(size).toList(); //список переводов на данной странице
 
         Pagination pagination = new Pagination(size, countPayments, current);
-        return PaymentMapper.listPayments(currentPayments, pagination);
-    }
-}
+        return BookingMapper.listBookings(currentPayments, pagination);
+    }*/
+
+    //}

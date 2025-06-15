@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @Entity
-@Table(name = "payments")
+@Table(name = "bookings")
 @Data
 public class Booking {
 

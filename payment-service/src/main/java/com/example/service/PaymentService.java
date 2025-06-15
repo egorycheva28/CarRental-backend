@@ -19,5 +19,5 @@ public interface PaymentService {
 
     //SuccessResponse editCar(UUID carId, EditPayment editCar, Authentication authentication);
 
-    SuccessResponse statusPaid(UUID carId, StatusPayment status);
+    //SuccessResponse statusPaid(UUID carId, StatusPayment status);
 }

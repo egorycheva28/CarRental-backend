@@ -26,7 +26,7 @@
         <module>api-gateway</module>
 		<module>car-service</module>
 		<module>payment-service</module>
-		<module>booking-service</module>
+		<module>bookingService</module>
 	</modules>
 	<scm>
 		<connection/>

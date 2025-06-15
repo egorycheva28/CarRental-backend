@@ -12,22 +12,18 @@ public class BookingMapper {
 
     public static Booking createBooking(CreateBooking createBooking) {
         Booking booking = new Booking();
-        booking.setName(createPayment.name());
-        booking.setStatus(createPayment.status());
-        booking.setPrice(createPayment.price());
+        booking.setName(createBooking.name());
         return booking;
     }
 
-    public static GetBooking getPayment(Booking payment) {
+    public static GetBooking getBooking(Booking payment) {
         return new GetBooking(
                 payment.getId(),
-                payment.getName(),
-                payment.getStatus(),
-                payment.getPrice()
+                payment.getName()
         );
     }
 
-    public static ListBookings listPayments(List<GetBooking> listPayments, Pagination pagination) {
+    public static ListBookings listBookings(List<GetBooking> listPayments, Pagination pagination) {
         return new ListBookings(
                 listPayments,
                 pagination

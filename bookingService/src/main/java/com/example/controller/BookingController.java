@@ -6,7 +6,7 @@ import com.example.dto.response.GetBooking;
 import com.example.dto.response.ListBookings;
 import com.example.dto.response.SuccessResponse;
 import com.example.model.Booking;
-import com.example.service.BookingService;
+//import com.example.service.BookingService;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@RestController
+/*@RestController
 @RequestMapping("booking")
 @RequiredArgsConstructor
 public class BookingController {
@@ -39,7 +39,7 @@ public class BookingController {
     @PostMapping("/create")
     public UUID createBooking(@RequestBody CreateBooking createBooking) {
         return bookingService.createBooking(createBooking);
-    }
+    }*/
 
     // Завершение аренды
     /*@Transactional
@@ -60,15 +60,15 @@ public class BookingController {
     }*/
 
     //Завершение аренды - добавление данных об окончании аренды в запись журнала аренды, перевод статуса автомобиля в "свободен"
-    @PostMapping("/complete/{id}")
+    /*@PostMapping("/complete/{id}")
     public SuccessResponse completeBooking(@PathVariable(name = "id") UUID bookingId) {
         return bookingService.completeBooking(bookingId);
-    }
+    }*/
     //Сброс статуса "Забронировано", если в течение определённого времени платёж не был произведён, перевод платежа в статус "Отменён"
 
     //получение истории бронирования
     //Для конкретного пользователя (свою историю может просматривать каждый, чужую - только админ)
-    @GetMapping("/history/user/{userId}")
+    /*@GetMapping("/history/user/{userId}")
     public ListBookings getUserHistory(@PathVariable(name = "id") UUID userId, Long size, Long current) {
         //сравнивать айди пользователей и на наличие, посмотреть для бали
 
@@ -81,6 +81,6 @@ public class BookingController {
     public ListBookings getCarHistory(@PathVariable(name = "id") UUID carId, Long size, Long current) {
         //из токена понять роль (только админ может)
         return bookingService.getCarHistory(carId, size, current);
-    }
+    }*/
 
-}
+//}

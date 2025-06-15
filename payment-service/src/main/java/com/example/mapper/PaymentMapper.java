@@ -4,7 +4,6 @@ import com.example.dto.Pagination;
 import com.example.dto.requests.CreatePayment;
 import com.example.dto.response.GetPayment;
 import com.example.dto.response.ListPayments;
-import com.example.model.Car;
 import com.example.model.Payment;
 
 import java.util.List;

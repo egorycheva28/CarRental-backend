@@ -1,6 +1,5 @@
 package com.example.exceptionHandler;
 
-import com.example.exception.AvailabilityException;
 import com.example.exception.PaginationException;
 import com.example.exception.BookingNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -14,9 +13,9 @@ import java.util.Map;
 @ControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(value = BookingNotFoundException.class)
-    public ResponseEntity<Map<String, Object>> handleUserNotFoundException(BookingNotFoundException ex) {
+    public ResponseEntity<Map<String, Object>> handleBookingNotFoundException(BookingNotFoundException ex) {
         Map<String, Object> errorbody = new HashMap<>();
-        errorbody.put("error", "Ошибка получения пользователя");
+        errorbody.put("error", "Ошибка получения аренды автомобиля");
         errorbody.put("message", ex.getMessage());
 
         return new ResponseEntity<>(errorbody, HttpStatus.NOT_FOUND);
@@ -31,14 +30,6 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorBody, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(value = AvailabilityException.class)
-    public ResponseEntity<Map<String, Object>> handleAvailabilityException(AvailabilityException ex) {
-        Map<String, Object> errorBody = new HashMap<>();
-        errorBody.put("error", "Pagination Error");
-        errorBody.put("message", ex.getMessage());
-
-        return new ResponseEntity<>(errorBody, HttpStatus.BAD_REQUEST);
-    }
     /*@ExceptionHandler(value = LoginException.class)
     public ResponseEntity<Map<String,Object>> handleLoginException(LoginException ex){
         Map<String,Object> errorbody = new HashMap<>();

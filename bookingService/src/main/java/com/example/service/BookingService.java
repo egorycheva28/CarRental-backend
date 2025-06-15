@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.UUID;
 
-public interface BookingService {
-    AvailabilityBookingResponse checkAvailability(UUID carId);
+//public interface BookingService {
+    /*AvailabilityBookingResponse checkAvailability(UUID carId);
 
     SuccessResponse changeStatusBooking(UUID carId, AvailabilityBookingResponse availabilityBookingResponse);
 
     UUID createBooking(CreateBooking createBooking);
 
-    SuccessResponse completeBooking(UUID bookingId);
+    SuccessResponse completeBooking(UUID bookingId);*/
     //ListBookings getPayments(Authentication authentication, StatusPayment statusCar, Long size, Long current);
 
     //GetBooking getPaymentById(UUID carId, Authentication authentication);
@@ -28,4 +28,5 @@ public interface BookingService {
     //SuccessResponse editCar(UUID carId, EditPayment editCar, Authentication authentication);
 
     //   SuccessResponse statusPaid(UUID carId, StatusPayment status);
-}
+//}
+
