@@ -2,8 +2,7 @@ package com.example.security;
 
 import com.example.security.jwt.AuthEntryPointJwt;
 import com.example.security.jwt.AuthTokenFilter;
-import com.example.security.services.UserDetailsServiceImpl;
-
+//import com.example.security.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,8 +20,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableMethodSecurity
 public class WebSecurityConfig {
-    @Autowired
-    UserDetailsServiceImpl userDetailsService;
+    //@Autowired
+    //UserDetailsServiceImpl userDetailsService;
 
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
@@ -32,25 +31,9 @@ public class WebSecurityConfig {
         return new AuthTokenFilter();
     }
 
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 
-        authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder());
 
-        return authProvider;
-    }
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
-        return authConfig.getAuthenticationManager();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -60,11 +43,11 @@ public class WebSecurityConfig {
                 //.authorizeHttpRequests(auth ->
                 //auth.requestMatchers("/**").permitAll()
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/auth/register").permitAll()
-                                .requestMatchers("/auth/login").permitAll()
-                                .requestMatchers("/admin/profile/{id}").permitAll()
+                        auth//.requestMatchers("/auth/register").permitAll()
+                                //.requestMatchers("/auth/login").permitAll()
+                                //.requestMatchers("/admin/profile/{id}").permitAll()
                                 //.requestMatchers("/user/profile").permitAll()
-                                .requestMatchers("/auth/refreshToken").permitAll() //refreshToken
+                               // .requestMatchers("/auth/refreshToken").permitAll() //refreshToken
                                 .requestMatchers("/swagger-ui.html").permitAll()
                                 .requestMatchers("/swagger-ui/**").permitAll()
                                 .requestMatchers("/v3/api-docs/**").permitAll()
@@ -72,7 +55,6 @@ public class WebSecurityConfig {
                                 .anyRequest().authenticated()
                 );
 
-        http.authenticationProvider(authenticationProvider());
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 

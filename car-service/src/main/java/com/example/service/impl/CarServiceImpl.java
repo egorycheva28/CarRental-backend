@@ -11,10 +11,12 @@ import com.example.exception.PaginationException;
 import com.example.model.Car;
 import com.example.model.Status;
 import com.example.repository.CarRepository;
+import com.example.security.jwt.JwtUtils;
 import com.example.service.CarService;
-import jakarta.validation.ValidationException;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.mapper.CarMapper;
 
@@ -29,9 +31,11 @@ public class CarServiceImpl implements CarService {
 
     private final CarRepository carRepository;
 
-    //все
+    @Autowired
+    private HttpServletRequest request;
+
     @Override
-    public ListCars getCars(Authentication authentication, Status statusCar, Long size, Long current) {
+    public ListCars getCars(Status statusCar, Long size, Long current) {
         List<Car> cars = (List<Car>) carRepository.findAll();
 
         List<GetCar> filterCars = new ArrayList<>();//отфильтрованный список
@@ -58,26 +62,20 @@ public class CarServiceImpl implements CarService {
         return CarMapper.listCars(currentCars, pagination);
     }
 
-    //все
-    // @Override
-    //public String getAvailableCars() {
-
-    //}
-
-    //все
     @Override
-    public GetCar getCarById(UUID carId, Authentication authentication) {
+    public GetCar getCarById(UUID carId) {
         Car car = carRepository.findById(carId)
                 .orElseThrow(() -> new CarNotFoundException("Такой машины нет!"));
 
         return CarMapper.getCar(car);
     }
 
-    //админ
     @Override
-    public UUID createCar(CreateCar createCar) {
+    public UUID createCar(Authentication authentication, CreateCar createCar) {
+        String emailUser = JwtUtils.getUserEmailFromRequest(request);
 
         Car car = CarMapper.createCar(createCar);
+        car.setEmailUser(emailUser);
         /*var errors = validator.validate(car);
         if (!errors.isEmpty()) {
             StringBuilder errorMessage = new StringBuilder();
@@ -93,9 +91,8 @@ public class CarServiceImpl implements CarService {
         return car.getId();
     }
 
-    //админ
     @Override
-    public SuccessResponse editCar(UUID carId, EditCar editCar, Authentication authentication) {
+    public SuccessResponse editCar(UUID carId, EditCar editCar) {
         Car car = carRepository.findById(carId)
                 .orElseThrow(() -> new CarNotFoundException("Car with ID: " + carId + " not found."));
 
@@ -113,7 +110,6 @@ public class CarServiceImpl implements CarService {
         return new SuccessResponse("Данные о машине успешно изменены!");
     }
 
-    //админ
     @Override
     public SuccessResponse statusRapair(UUID carId, Status status) {
         Car car = carRepository.findById(carId)
@@ -124,4 +120,5 @@ public class CarServiceImpl implements CarService {
         carRepository.save(car);
         return new SuccessResponse("Статус машины успешно изменен!");
     }
+
 }

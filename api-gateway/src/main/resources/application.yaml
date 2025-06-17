@@ -1,0 +1,20 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+
+
+  main:
+    web-application-type: reactive
+
+logging:
+  level:
+    root: INFO
+    com.example.gateway: DEBUG

@@ -11,13 +11,13 @@ import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import java.util.UUID;
 
 public interface CarService {
-    ListCars getCars(Authentication authentication, Status statusCar, Long size, Long current);
+    ListCars getCars(Status statusCar, Long size, Long current);
 
-    GetCar getCarById(UUID carId, Authentication authentication);
+    GetCar getCarById(UUID carId);
 
-    UUID createCar(CreateCar createCar);
+    UUID createCar(Authentication authentication, CreateCar createCar);
 
-    SuccessResponse editCar(UUID carId, EditCar editCar, Authentication authentication);
+    SuccessResponse editCar(UUID carId, EditCar editCar);
 
     SuccessResponse statusRapair(UUID carId, Status status);
 }

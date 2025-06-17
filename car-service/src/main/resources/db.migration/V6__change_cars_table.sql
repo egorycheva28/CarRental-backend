@@ -1,0 +1,2 @@
+ALTER TABLE cars
+ADD COLUMN email_user VARCHAR NOT NULL;

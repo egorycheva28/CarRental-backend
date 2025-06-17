@@ -31,11 +31,11 @@ public class Booking {
     @Pattern(regexp = "^[А-ЯЁ][а-яё]{0,99}$", message = "В lastName допускаются только буквы русского алфавита, первая буква - заглавная, не более 100 символов")
     private String name;
 
-    @NotNull(message = "Цена - это обязательное поле")
+    @NotNull(message = "Начало - это обязательное поле")
     @Column(name = "start_time", nullable = false)
     private Date startTime;
 
-    @NotNull(message = "Цена - это обязательное поле")
+    @NotNull(message = "Конец - это обязательное поле")
     @Column(name = "end_time", nullable = false)
     private Date endTime;
 

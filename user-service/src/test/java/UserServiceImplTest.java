@@ -49,7 +49,7 @@ public class UserServiceImplTest {
         user.setId(userId);
         user.setActive(false);
 
-        when(authentication.getPrincipal()).thenReturn(new UserDetailsImpl(userId, "Sasha1", "Sasha2", "Sasha3", "email@example.com", "password"));
+        //when(authentication.getPrincipal()).thenReturn(new UserDetailsImpl(userId, "Sasha1", "Sasha2", "Sasha3", "email@example.com", "password"));
     }
 
     @Test

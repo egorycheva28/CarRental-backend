@@ -39,13 +39,8 @@ public class Car {
     @Column(name = "price", nullable = false)
     private Long price;
 
-    //кто создал запись
-    /*@ManyToOne
-    @JoinColumn(name="user_email", nullable = false)
-    private User user;
-
-    //кто арендовал машину
-    @ManyToOne
-    @JoinColumn(name="id", nullable = false)
-    private User user1;*/
+    @NotNull(message = "Почта пользователя - это обязательное поле")
+    @Column(name = "email_user", nullable = false)
+    @Email(message = "Email не соответствует стандартной маске почты")
+    private String emailUser;
 }
