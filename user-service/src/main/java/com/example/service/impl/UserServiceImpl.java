@@ -9,14 +9,10 @@ import com.example.mapper.UserMapper;
 import com.example.model.User;
 import com.example.repository.RoleRepository;
 import com.example.repository.UserRepository;
-import com.example.security.jwt.JwtUtils;
-import com.example.security.services.RefreshTokenService;
 import com.example.security.services.UserDetailsImpl;
 import com.example.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -29,36 +25,45 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
-    private final JwtUtils jwtUtils;
-
-    private final AuthenticationManager authenticationManager;
-
-    //норм
     @Override
     public GetUser getProfile(Authentication authentication) {
-        UUID userId = extractId(authentication);//id получить из токена
-        System.out.println(userId);
+        UUID userId = extractId(authentication);
+
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("Такого пользователя нет!"));
 
         return UserMapper.getUser(user);
     }
 
-    //норм
     @Override
-    public SuccessResponse deleteUser(Authentication authentication) {
-        UUID userId = extractId(authentication);//id получить из токена
+    public SuccessResponse activateUser(Authentication authentication) {
+        UUID userId = extractId(authentication);
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("Такого пользователя нет!"));
-        userRepository.deleteById(user.getId());
 
-        return new SuccessResponse("Пользователь успешно удалён!");
+        user.setActive(true);
+        userRepository.save(user);
+
+        return new SuccessResponse("Статус пользователя успешно изменён!");
+    }
+
+    @Override
+    public SuccessResponse deactivateUser(Authentication authentication) {
+        UUID userId = extractId(authentication);
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("Такого пользователя нет!"));
+
+        user.setActive(false);
+        userRepository.save(user);
+
+        return new SuccessResponse("Статус пользователя успешно изменён!");
     }
 
     @Override
     public SuccessResponse editUser(EditUser data, Authentication authentication) {
-        UUID userId = extractId(authentication);//id получить из токена
+        UUID userId = extractId(authentication);
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("Такого пользователя нет!"));
@@ -95,7 +100,6 @@ public class UserServiceImpl implements UserService {
     }
 
     private UUID extractId(Authentication authentication) {
-        System.out.println(((UserDetailsImpl) authentication.getPrincipal()).getId());
         return ((UserDetailsImpl) authentication.getPrincipal()).getId();
     }
 }

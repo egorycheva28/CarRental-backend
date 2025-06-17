@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @Entity
-@Table(name = "refresh_table")
+@Table(name = "refreshtoken")
 @Data
 public class RefreshToken {
 
@@ -23,7 +23,7 @@ public class RefreshToken {
     private Date CreateDate = new Date();
 
     @NotNull(message = "Это обязательное поле")
-    @Column(name = "refresh_token", nullable = false)
+    @Column(name = "token", nullable = false)
     private String token;
 
     //дата истечения токена

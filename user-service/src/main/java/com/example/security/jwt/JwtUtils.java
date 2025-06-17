@@ -8,12 +8,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.security.Key;
+import java.time.Duration;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -28,14 +32,33 @@ public class JwtUtils {
     //@Value("${bezkoder.app.jwtExpirationMs}")
     private int jwtExpirationMs = 1800000;
 
-    public String generateJwtToken(Authentication authentication) {//Authentication authentication User user из логина почту берем для токена
+    public String generateJwtToken(Authentication authentication) {
 
         UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
 
+        List<String> roles = userPrincipal.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList());
+
         return Jwts.builder()
-                //.setSubject((userPrincipal.getUsername()))
                 .setSubject(userPrincipal.getEmail())
                 .claim("userId", userPrincipal.getId())
+                .claim("roles", roles)
+                .setIssuedAt(new Date())//дата создания токена
+                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))//дата конца токена
+                .signWith(key(), SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    public String generateTokenFromUser(User user) {
+        List<String> roles = user.getRoles().stream()
+                .map(role -> role.getRole().name())
+                .collect(Collectors.toList());
+
+        return Jwts.builder()
+                .setSubject(user.getEmail())
+                .claim("userId", user.getId())
+                .claim("roles", roles)
                 .setIssuedAt(new Date())//дата создания токена
                 .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))//дата конца токена
                 .signWith(key(), SignatureAlgorithm.HS256)

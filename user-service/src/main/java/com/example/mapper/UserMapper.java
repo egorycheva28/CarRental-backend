@@ -27,6 +27,7 @@ public class UserMapper {
     public static GetUser getUser(User user) {
         return new GetUser(
                 user.getId(),
+                user.isActive(),
                 user.getLastName(),
                 user.getFirstName(),
                 user.getMiddleName(),

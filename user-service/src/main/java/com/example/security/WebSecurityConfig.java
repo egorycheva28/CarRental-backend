@@ -65,6 +65,10 @@ public class WebSecurityConfig {
                                 .requestMatchers("/admin/profile/{id}").permitAll()
                                 //.requestMatchers("/user/profile").permitAll()
                                 .requestMatchers("/auth/refreshToken").permitAll() //refreshToken
+                                //.requestMatchers("/swagger-ui.html").permitAll()
+                                //.requestMatchers("/swagger-ui/**").permitAll()
+                                //.requestMatchers("/v3/api-docs/**").permitAll()
+                                .requestMatchers("/error").permitAll()
                                 .anyRequest().authenticated()
                 );
 

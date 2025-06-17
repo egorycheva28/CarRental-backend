@@ -25,12 +25,12 @@ public class AuthController {
     private final RefreshTokenService refreshTokenService;
 
     @PostMapping("register")
-    public UUID registerUser(@RequestBody RegisterUser data) {
+    public GetToken registerUser(@RequestBody RegisterUser data) {
         return authService.registerUser(data);
     }
 
     @PostMapping("login")
-    public String loginUser(@RequestBody LoginUser data) {
+    public GetToken loginUser(@RequestBody LoginUser data) {
         return authService.loginUser(data);
     }
 
@@ -39,8 +39,8 @@ public class AuthController {
         return authService.logoutUser(authentication);
     }
 
-    /*@PostMapping("refreshToken")
-    public GetToken refreshToken(RefreshTokenRequest refreshTokenRequest) {
-        return refreshTokenService.refreshToken(refreshTokenRequest);
-    }*/
+    @PostMapping("refreshToken")
+    public GetToken refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
+        return authService.refreshToken(refreshTokenRequest);
+    }
 }

@@ -1,5 +1,5 @@
 package com.example.model;
 
 public enum Roles {
-    ADMIN, CLIENT
+    ROLE_ADMIN, ROLE_CLIENT
 }

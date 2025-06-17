@@ -27,6 +27,10 @@ public class User {
     @Column(name = "edit_date", nullable = false)
     private Date editDate = new Date();
 
+    @NotNull(message = "Это обязательное поле")
+    @Column(name = "is_active", nullable = false)
+    private boolean isActive;
+
     @NotNull(message = "Фамилия - это обязательное поле")
     @Column(name = "last_name", nullable = false, length = 100)
     @Pattern(regexp = "^[А-ЯЁ][а-яё]{0,99}$", message = "В lastName допускаются только буквы русского алфавита, первая буква - заглавная, не более 100 символов")

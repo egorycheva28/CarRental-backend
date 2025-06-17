@@ -22,7 +22,6 @@ public class AdminServiceImpl implements AdminService {
 
     private final UserRepository userRepository;
 
-    //надо сделать проверку на админа
     @Override
     public GetUser getProfileById(UUID userId) {
         User user = userRepository.findById(userId)

@@ -19,14 +19,14 @@ public class AddRoles {
     }
 
     private void addRoles() {
-        if (roleRepository.findByRole(Roles.ADMIN).isEmpty()) {
+        if (roleRepository.findByRole(Roles.ROLE_ADMIN).isEmpty()) {
             Role role = new Role();
-            role.setRole(Roles.ADMIN);
+            role.setRole(Roles.ROLE_ADMIN);
             roleRepository.save(role);
         }
-        if (roleRepository.findByRole(Roles.CLIENT).isEmpty()) {
+        if (roleRepository.findByRole(Roles.ROLE_CLIENT).isEmpty()) {
             Role role = new Role();
-            role.setRole(Roles.CLIENT);
+            role.setRole(Roles.ROLE_CLIENT);
             roleRepository.save(role);
         }
     }

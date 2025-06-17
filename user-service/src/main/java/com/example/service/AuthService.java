@@ -1,16 +1,18 @@
 package com.example.service;
 
 import com.example.dto.requests.LoginUser;
+import com.example.dto.requests.RefreshTokenRequest;
 import com.example.dto.requests.RegisterUser;
+import com.example.dto.response.GetToken;
 import com.example.dto.response.SuccessResponse;
 import org.springframework.security.core.Authentication;
 
-import java.util.UUID;
-
 public interface AuthService {
-    UUID registerUser(RegisterUser data);
+    GetToken registerUser(RegisterUser data);
 
-    String loginUser(LoginUser data);
+    GetToken loginUser(LoginUser data);
 
     SuccessResponse logoutUser(Authentication authentication);
+
+    GetToken refreshToken(RefreshTokenRequest refreshTokenRequest);
 }

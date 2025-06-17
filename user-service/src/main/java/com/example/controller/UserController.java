@@ -23,9 +23,14 @@ public class UserController {
         return userService.getProfile(authentication);
     }
 
-    @DeleteMapping("delete")
-    public SuccessResponse deleteUser(Authentication authentication) {
-        return userService.deleteUser(authentication);
+    @PatchMapping("activateUser")
+    public SuccessResponse activateUser(Authentication authentication) {
+        return userService.activateUser(authentication);
+    }
+
+    @PatchMapping("deactivateUser")
+    public SuccessResponse deactivateUser(Authentication authentication) {
+        return userService.deactivateUser(authentication);
     }
 
     @PatchMapping("edit")

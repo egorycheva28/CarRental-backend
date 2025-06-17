@@ -7,6 +7,8 @@ import com.example.dto.response.ListCars;
 import com.example.dto.response.SuccessResponse;
 import com.example.model.Status;
 import com.example.service.CarService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.web.bind.annotation.*;
