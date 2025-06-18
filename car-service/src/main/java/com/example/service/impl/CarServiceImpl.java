@@ -94,7 +94,7 @@ public class CarServiceImpl implements CarService {
     @Override
     public SuccessResponse editCar(UUID carId, EditCar editCar) {
         Car car = carRepository.findById(carId)
-                .orElseThrow(() -> new CarNotFoundException("Car with ID: " + carId + " not found."));
+                .orElseThrow(() -> new CarNotFoundException("Такой машины нет!"));
 
         //название и цену редактировать
         if (editCar.name() != null) {
@@ -113,7 +113,7 @@ public class CarServiceImpl implements CarService {
     @Override
     public SuccessResponse statusRapair(UUID carId, Status status) {
         Car car = carRepository.findById(carId)
-                .orElseThrow(() -> new CarNotFoundException("Car with ID: " + carId + " not found."));
+                .orElseThrow(() -> new CarNotFoundException("Такой машины нет!"));
 
         car.setStatus(status);
         car.setEditDate(new Date());

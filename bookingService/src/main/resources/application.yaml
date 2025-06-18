@@ -12,6 +12,9 @@ spring:
         format_sql: true
         ddl-auto: validate
 
+  kafka:
+    bootstrap-servers: localhost:9092
+
   datasource:
     url: jdbc:postgresql://localhost:5432/booking-service
     username: postgres
@@ -21,3 +24,8 @@ spring:
     enabled: true
     locations:
       - db.migration
+
+springdoc:
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
