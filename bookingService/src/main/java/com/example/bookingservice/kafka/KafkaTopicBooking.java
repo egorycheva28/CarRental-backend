@@ -32,4 +32,12 @@ public class KafkaTopicBooking {
     public NewTopic paymenttopik3() {
         return TopicBuilder.name("payment3-topik").build();
     }
+    @Bean
+    public NewTopic paymenttopik4() {
+        return TopicBuilder.name("payment4-topik").build();
+    }
+    @Bean
+    public NewTopic paymenttopik5() {
+        return TopicBuilder.name("payment5-topik").build();
+    }
 }

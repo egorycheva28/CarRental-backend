@@ -31,6 +31,10 @@ public class KafkaSenderBooking {
         sendEvent("payment3-topik", kafkaEvent);
     }
 
+    public void doPayment(KafkaEvent kafkaEvent) {
+        sendEvent("payment5-topik", kafkaEvent);
+    }
+
     private void sendEvent(String topic, KafkaEvent kafkaEvent) {
         kafkaTemplate.send(topic, kafkaEvent);
     }

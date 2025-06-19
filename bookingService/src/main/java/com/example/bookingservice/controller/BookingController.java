@@ -36,28 +36,7 @@ public class BookingController {
         return bookingService.createBooking(createBooking);
     }
 
-    //проведение платежа, связать с payment-service
-
-
-    // Завершение аренды
-    /*@Transactional
-    public void completeRental(Long rentalId) {
-        Rental rental = rentalRepository.findById(rentalId)
-                .orElseThrow(() -> new RuntimeException("Аренда не найдена"));
-        rental.setEndTime(LocalDateTime.now());
-        rental.setStatus("Завершено");
-        rentalRepository.save(rental);
-
-        // Обновить статус автомобиля
-        Car car = rental.getCar();
-        car.setStatus("свободен");
-        carRepository.save(car);
-
-        // Отправка события Kafka
-        kafkaTemplate.send("rental-events", "Аренда завершена ID: " + rentalId);
-    }*/
-
-    //Завершение аренды - добавление данных об окончании аренды в запись журнала аренды, перевод статуса автомобиля в "свободен"
+    //сделать
     @PostMapping("/complete/{id}")
     @Operation(summary = "Завершение аренды")
     public SuccessResponse completeBooking(@PathVariable(name = "id") UUID bookingId) {

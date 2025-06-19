@@ -108,6 +108,8 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public SuccessResponse doPayment(UUID paymentId) {
+        UUID userId = JwtUtils.getUserIdFromRequest(request);
+
         Payment payment = paymentRepository.findById(paymentId)
                 .orElseThrow(() -> new PaymentNotFoundException("Такого платежа нет!"));
 
@@ -115,8 +117,8 @@ public class PaymentServiceImpl implements PaymentService {
         payment.setEditDate(LocalDateTime.now());
         paymentRepository.save(payment);
 
-        //отправка в кафку события на смену статусов у машины и у брони на арендована
-//kafkaSenderPayment.doPayment();
+        kafkaSenderPayment.doPayment(new KafkaEvent(null, payment.getBookingId(), paymentId, userId));
+
         return new SuccessResponse("Платёж успешно оплачен!");
     }
 

@@ -73,4 +73,30 @@ public class KafkaListenerBooking {
         return kafkaEvent.bookingId();
 
     }
+
+    @KafkaListener(topics = "payment4-topik", groupId = "car-group", containerFactory = "kafkaListenerContainerFactoryBooking")
+
+    public UUID doPayment(KafkaEvent kafkaEvent) {
+        UUID bookingId = kafkaEvent.bookingId();
+
+        logger.info("Начинаем аренду для_bookingId={}", bookingId);
+
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> {
+                    logger.error("Бронирование не найдено для bookingId={}", bookingId);
+                    return new BookingNotFoundException("Аренда не найдена");
+                });
+
+        logger.info("Обновляем статус бронирования для bookingId={}", bookingId);
+        booking.setStatusBooking(StatusBooking.RENTED);
+        bookingRepository.save(booking);
+        logger.info("Статус бронирования обновлён на {} для bookingId={}", StatusBooking.RENTED, bookingId);
+
+        logger.info("Отправляем сообщение автомобилю об аренде для bookingId={}", bookingId);
+        kafkaSenderBooking.doPayment(new KafkaEvent(booking.getCarId(), bookingId, kafkaEvent.paymentId(), kafkaEvent.userId()));
+
+        logger.info("Обработка аренды завершена для bookingId={}", bookingId);
+        return kafkaEvent.bookingId();
+
+    }
 }
