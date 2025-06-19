@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AmplicodePersistenceUnitSettings">
+    <persistence-units>
+      <persistence-unit moduleName="bookingService" name="Default">
+        <packages>
+          <package value="com.example" />
+        </packages>
+      </persistence-unit>
+      <persistence-unit moduleName="car-service" name="Default">
+        <packages>
+          <package value="com.example" />
+        </packages>
+      </persistence-unit>
+      <persistence-unit moduleName="common" name="Default">
+        <packages>
+          <package value="com.example" />
+        </packages>
+      </persistence-unit>
+      <persistence-unit moduleName="api-Gateway" name="Default">
+        <packages>
+          <package value="com.example" />
+        </packages>
+      </persistence-unit>
+      <persistence-unit moduleName="payment-service" name="Default">
+        <packages>
+          <package value="com.example" />
+        </packages>
+      </persistence-unit>
+      <persistence-unit moduleName="user-service" name="Default">
+        <packages>
+          <package value="com.example" />
+        </packages>
+      </persistence-unit>
+    </persistence-units>
+  </component>
+</project>
