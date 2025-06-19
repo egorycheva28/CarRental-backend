@@ -185,5 +185,4 @@ public class BookingServiceImpl implements BookingService {
         Pagination pagination = new Pagination(size, countBookings, current);
         return BookingMapper.listBookings(currentBookings, pagination);
     }
-
 }

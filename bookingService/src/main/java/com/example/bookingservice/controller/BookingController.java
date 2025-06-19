@@ -36,7 +36,6 @@ public class BookingController {
         return bookingService.createBooking(createBooking);
     }
 
-    //сделать
     @PostMapping("/complete/{id}")
     @Operation(summary = "Завершение аренды")
     public SuccessResponse completeBooking(@PathVariable(name = "id") UUID bookingId) {
