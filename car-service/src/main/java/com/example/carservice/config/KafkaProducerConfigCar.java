@@ -21,7 +21,7 @@ public class KafkaProducerConfigCar {
     private String bootstrapServer;
 
     @Bean
-    public ProducerFactory<String, KafkaEvent> producerFactoryBooking() {
+    public ProducerFactory<String, KafkaEvent> producerFactoryCar() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -31,22 +31,7 @@ public class KafkaProducerConfigCar {
     }
 
     @Bean
-    public KafkaTemplate<String, KafkaEvent> kafkaTemplateBooking() {
-        return new KafkaTemplate<>(producerFactoryBooking());
-    }
-
-    @Bean
-    public ProducerFactory<String, KafkaEvent> producerFactoryPayment() {
-        Map<String, Object> configProps = new HashMap<>();
-        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
-        configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
-        configProps.put(JsonSerializer.ADD_TYPE_INFO_HEADERS, false);
-        return new DefaultKafkaProducerFactory<>(configProps);
-    }
-
-    @Bean
-    public KafkaTemplate<String, KafkaEvent> kafkaTemplatePayment() {
-        return new KafkaTemplate<>(producerFactoryPayment());
+    public KafkaTemplate<String, KafkaEvent> kafkaTemplateCar() {
+        return new KafkaTemplate<>(producerFactoryCar());
     }
 }

@@ -1,7 +1,5 @@
 package com.example.bookingservice.config;
 
-//import lombok.Value;
-
 import com.example.bookingservice.kafka.KafkaEvent;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -18,8 +16,6 @@ import java.util.Map;
 
 @Configuration
 public class KafkaProducerConfigBooking {
-    //для отправки событий
-
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServer;
 

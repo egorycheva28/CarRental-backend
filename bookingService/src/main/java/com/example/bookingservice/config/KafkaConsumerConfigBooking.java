@@ -22,7 +22,7 @@ public class KafkaConsumerConfigBooking {
     private String bootstrapServers;
 
     @Bean
-    public ConsumerFactory<String, KafkaEvent> consumerFactoryCar() {
+    public ConsumerFactory<String, KafkaEvent> consumerFactoryBooking() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         configProps.put(ConsumerConfig.GROUP_ID_CONFIG, "car-group");
@@ -38,33 +38,9 @@ public class KafkaConsumerConfigBooking {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, KafkaEvent> kafkaListenerContainerFactoryCar() {
+    public ConcurrentKafkaListenerContainerFactory<String, KafkaEvent> kafkaListenerContainerFactoryBooking() {
         ConcurrentKafkaListenerContainerFactory<String, KafkaEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerFactoryCar());
+        factory.setConsumerFactory(consumerFactoryBooking());
         return factory;
     }
-
-    @Bean
-    public ConsumerFactory<String, KafkaEvent> consumerFactoryPayment() {
-        Map<String, Object> configProps = new HashMap<>();
-        configProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        configProps.put(ConsumerConfig.GROUP_ID_CONFIG, "car-group");
-        configProps.put(JsonDeserializer.TRUSTED_PACKAGES, "com.example.kafka");
-        configProps.put(JsonDeserializer.VALUE_DEFAULT_TYPE, KafkaEvent.class.getName());
-        configProps.put(JsonDeserializer.USE_TYPE_INFO_HEADERS, false);
-
-        return new DefaultKafkaConsumerFactory<>(
-                configProps,
-                new StringDeserializer(),
-                new JsonDeserializer<>(KafkaEvent.class)
-        );
-    }
-
-    @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, KafkaEvent> kafkaListenerContainerFactoryPayment() {
-        ConcurrentKafkaListenerContainerFactory<String, KafkaEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerFactoryPayment());
-        return factory;
-    }
-
 }

@@ -40,7 +40,7 @@ public class CarServiceFake {
                     httpEntity,
                     CarDto.class
             );
-
+            System.out.println(carId);
             return response.getBody();
 
         } catch (HttpClientErrorException.NotFound e) {

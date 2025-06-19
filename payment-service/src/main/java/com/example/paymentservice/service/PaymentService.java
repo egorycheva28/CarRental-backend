@@ -16,7 +16,7 @@ public interface PaymentService {
 
     GetPayment getPaymentById(UUID carId);
 
-    SuccessResponse statusPaid(UUID paymentId);
+    SuccessResponse doPayment(UUID paymentId);
 
     SuccessResponse cancelPayment(UUID paymentId);
 }

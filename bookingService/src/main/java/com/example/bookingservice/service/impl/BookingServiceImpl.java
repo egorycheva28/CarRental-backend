@@ -28,7 +28,6 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -47,7 +46,7 @@ public class BookingServiceImpl implements BookingService {
     public AvailabilityBookingResponse checkAvailability(UUID carId) {
         CarDto carDto = carServiceFake.getCarById(carId);
 
-        if (carDto.status() == Status.FREE) {
+        if (carDto.status().equals(Status.FREE)) {
             return new AvailabilityBookingResponse(true);
         }
         return new AvailabilityBookingResponse(false);
@@ -70,16 +69,19 @@ public class BookingServiceImpl implements BookingService {
         booking.setUserId(userId);
         booking.setCarId(createBooking.carId());
         booking.setStatusBooking(StatusBooking.NEW);
+        booking.setPaymentId(UUID.randomUUID());
 
         bookingRepository.save(booking);
 
-        kafkaSenderBooking.createBooking(new KafkaEvent(booking.getCarId(), booking.getId(), null));
+        kafkaSenderBooking.createBooking(new KafkaEvent(booking.getCarId(), booking.getId(), booking.getPaymentId(), userId));
 
         return booking.getId();
     }
 
     @Override
     public SuccessResponse completeBooking(UUID bookingId) {
+        UUID userId = JwtUtils.getUserIdFromRequest(request);
+
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new BookingNotFoundException("Аренда не найдена"));
 
@@ -92,18 +94,18 @@ public class BookingServiceImpl implements BookingService {
         bookingRepository.save(booking);
 
         // отправляем в кафку событие
-        kafkaSenderBooking.completeBooking(new KafkaEvent(booking.getCarId(), bookingId, null));
+        kafkaSenderBooking.completeBooking(new KafkaEvent(booking.getCarId(), bookingId, null, userId));
         return new SuccessResponse("Аренда успешно завершена!");
     }
 
-    //автоматически выполняется, если сколько-то минут статус Booked, то делаем статус Cancelled
     @Scheduled(fixedRate = 600000)
     public void cancelBooking() {
+        UUID userId = JwtUtils.getUserIdFromRequest(request);
+
         List<Booking> bookings = (List<Booking>) bookingRepository.findAll();
         LocalDateTime now = LocalDateTime.now();
 
         for (Booking booking : bookings) {
-            // Проверка, если статус не "арендовано" и прошло более 10 минут с создания
             if (!booking.getStatusBooking().equals(StatusBooking.RENTED)) {
                 LocalDateTime createdDate = booking.getCreateDate();
                 Duration duration = Duration.between(createdDate, now);
@@ -113,8 +115,7 @@ public class BookingServiceImpl implements BookingService {
                     bookingRepository.save(booking);
 
                     // Отправляем событие в Kafka
-                    // String event = String.format("{"bookingId": "%d", "status": "%s"}", booking.getId(), "отменен");
-                    // kafkaTemplate.send(TOPIC, event);
+
                 }
             }
         }

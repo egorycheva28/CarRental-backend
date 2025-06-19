@@ -19,5 +19,5 @@ public interface CarService {
 
     SuccessResponse editCar(UUID carId, EditCar editCar);
 
-    SuccessResponse statusRapair(UUID carId, Status status);
+    SuccessResponse statusRepair(UUID carId, Status status);
 }

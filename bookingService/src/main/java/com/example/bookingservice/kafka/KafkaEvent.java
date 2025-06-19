@@ -5,6 +5,7 @@ import java.util.UUID;
 public record KafkaEvent(
         UUID carId,
         UUID bookingId,
-        UUID paymentId
+        UUID paymentId,
+        UUID userId
 ) {
 }

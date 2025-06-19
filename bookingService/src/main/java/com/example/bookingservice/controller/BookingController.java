@@ -23,9 +23,10 @@ public class BookingController {
 
     private final BookingService bookingService;
 
-    @GetMapping("/check/{id}")
+    @GetMapping("/check/{carId}")
     @Operation(summary = "Проверка возможности аренды автомобиля")
-    public AvailabilityBookingResponse checkAvailability(@PathVariable(name = "id") UUID carId) {
+    public AvailabilityBookingResponse checkAvailability(@PathVariable(name = "carId") UUID carId) {
+        System.out.println(carId);
         return bookingService.checkAvailability(carId);
     }
 
@@ -58,27 +59,21 @@ public class BookingController {
 
     //Завершение аренды - добавление данных об окончании аренды в запись журнала аренды, перевод статуса автомобиля в "свободен"
     @PostMapping("/complete/{id}")
+    @Operation(summary = "Завершение аренды")
     public SuccessResponse completeBooking(@PathVariable(name = "id") UUID bookingId) {
         return bookingService.completeBooking(bookingId);
     }
 
-
-    //получение истории бронирования
-    //Для конкретного пользователя (свою историю может просматривать каждый)
     @GetMapping("/history/booking/user")
     @Operation(summary = "Получение своей истории бронирования")
     public ListBookings getUserBookingHistory(Long size, Long current) {
         return bookingService.getUserBookingHistory(size, current);
     }
 
-    //получение истории бронирования
-    //Для конкретного автомобиля (только админ)
-    //Для конкретного пользователя (чужую - только админ)
     @GetMapping("/history/booking")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Operation(summary = "Получение истории бронирования конкретного автомобиля или пользователя", description = "для админа")
     public ListBookings getBookingHistory(@RequestParam(value = "userId", required = false) UUID userId, @RequestParam(value = "carId", required = false) UUID carId, Long size, Long current) {
         return bookingService.getBookingHistory(userId, carId, size, current);
     }
-
 }

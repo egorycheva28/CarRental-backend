@@ -310,7 +310,7 @@ public class CarServiceImplTest {
         when(carRepository.findById(carId)).thenReturn(Optional.of(car));
         when(carRepository.save(any(Car.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        SuccessResponse response = carService.statusRapair(carId, Status.UNDER_REPAIR);
+        SuccessResponse response = carService.statusRepair(carId, Status.UNDER_REPAIR);
 
         assertNotNull(response);
         assertEquals("Статус машины успешно изменен!", response.message());
@@ -328,7 +328,7 @@ public class CarServiceImplTest {
         when(carRepository.findById(carId)).thenReturn(Optional.empty());
 
         assertThrows(CarNotFoundException.class, () -> {
-            carService.statusRapair(carId, Status.UNDER_REPAIR);
+            carService.statusRepair(carId, Status.UNDER_REPAIR);
         });
 
         verify(carRepository).findById(carId);

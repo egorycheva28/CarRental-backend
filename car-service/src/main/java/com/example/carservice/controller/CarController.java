@@ -54,6 +54,6 @@ public class CarController {
     @PutMapping("/{id}")
     @Operation(summary = "Смена статуса машины на 'на рамонте'", description = "для админа")
     public SuccessResponse statusRapair(@PathVariable(name = "id") UUID carId, Status status) {
-        return carService.statusRapair(carId, status);
+        return carService.statusRepair(carId, status);
     }
 }

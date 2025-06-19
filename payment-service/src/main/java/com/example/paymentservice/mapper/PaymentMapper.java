@@ -10,13 +10,6 @@ import java.util.List;
 
 public class PaymentMapper {
 
-    public static Payment createCar(CreatePayment createPayment) {
-        Payment car = new Payment();
-        car.setStatusPayment(createPayment.statusPayment());
-
-        return car;
-    }
-
     public static GetPayment getPayment(Payment payment) {
         return new GetPayment(
                 payment.getId(),
@@ -34,5 +27,4 @@ public class PaymentMapper {
                 pagination
         );
     }
-
 }

@@ -21,7 +21,7 @@ public class PaymentController {
 
     private final PaymentService paymentService;
 
-    @GetMapping()
+    @GetMapping("/allPayment")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Operation(summary = "Получение списка платежей", description = "для админа")
     public ListPayments getAllPayments(@RequestParam(value = "statusPayment", required = false) StatusPayment statusPayment, Long size, Long current) {
@@ -42,8 +42,8 @@ public class PaymentController {
 
     @PostMapping("/{paymentId}")
     @Operation(summary = "Оплата платежа")
-    public SuccessResponse statusPaid(@PathVariable(name = "paymentId") UUID paymentId) {
-        return paymentService.statusPaid(paymentId);
+    public SuccessResponse doPayment(@PathVariable(name = "paymentId") UUID paymentId) {
+        return paymentService.doPayment(paymentId);
     }
 
     @PutMapping("/{paymentId}")

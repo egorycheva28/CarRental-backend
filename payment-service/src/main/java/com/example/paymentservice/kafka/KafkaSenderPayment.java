@@ -11,19 +11,16 @@ public class KafkaSenderPayment {
 
     @Autowired
     private final KafkaTemplate<String, KafkaEvent> kafkaTemplateBooking;
-    @Autowired
-    private final KafkaTemplate<String, KafkaEvent> kafkaTemplatePayment;
 
     public void doPayment(KafkaEvent kafkaEvent) {
-        sendEventPayment("payment-topik", kafkaEvent);
+        sendEventBooking("booking-topik", kafkaEvent);
     }
 
+    public void cancelPayment(KafkaEvent kafkaEvent) {
+        sendEventBooking("payment2-topik", kafkaEvent);
+    }
 
     private void sendEventBooking(String topic, KafkaEvent kafkaEvent) {
         kafkaTemplateBooking.send(topic, kafkaEvent);
-    }
-
-    private void sendEventPayment(String topic, KafkaEvent kafkaEvent) {
-        kafkaTemplatePayment.send(topic, kafkaEvent);
     }
 }

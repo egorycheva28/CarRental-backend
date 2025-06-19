@@ -8,22 +8,18 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @Component
 public class KafkaSenderCar {
-    //отправляем событие
-
     @Autowired
-    private final KafkaTemplate<String, KafkaEvent> kafkaTemplateBooking;
-    @Autowired
-    private final KafkaTemplate<String, KafkaEvent> kafkaTemplatePayment;
+    private final KafkaTemplate<String, KafkaEvent> kafkaTemplate;
 
     public void reservedCarEvent(KafkaEvent kafkaEvent) {
-        sendEventBooking("booking-topik", kafkaEvent);
+        sendEventBooking("booking1-topik", kafkaEvent);
     }
 
     private void sendEventBooking(String topic, KafkaEvent kafkaEvent) {
-        kafkaTemplateBooking.send(topic, kafkaEvent);
+        kafkaTemplate.send(topic, kafkaEvent);
     }
 
     private void sendEventPayment(String topic, KafkaEvent kafkaEvent) {
-        kafkaTemplatePayment.send(topic, kafkaEvent);
+        kafkaTemplate.send(topic, kafkaEvent);
     }
 }

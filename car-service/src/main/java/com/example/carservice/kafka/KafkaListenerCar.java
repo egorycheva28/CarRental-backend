@@ -38,7 +38,7 @@ public class KafkaListenerCar {
             carRepository.save(car);
             logger.info("Статус автомобиля {} обновлен на {}", carId, car.getStatus());
 
-            kafkaSenderCar.reservedCarEvent(new KafkaEvent(carId, kafkaEvent.bookingId(), null));
+            kafkaSenderCar.reservedCarEvent(new KafkaEvent(carId, kafkaEvent.bookingId(), null, kafkaEvent.userId()));
             logger.info("Отправлено событие о бронировании для автомобиля с ID: {}", carId);
 
         } catch (Exception e) {
@@ -46,17 +46,24 @@ public class KafkaListenerCar {
         }
     }
 
-    /*public void createBooking(Event event) {
-        UUID carId = event.carId();
+    @KafkaListener(topics = "payment3-topik", groupId = "car-group", containerFactory = "kafkaListenerContainerFactoryCar")
 
-        Optional<Car> optionalCar = carRepository.findById(carId);
+    public void cancelPayment(KafkaEvent kafkaEvent) {
+        UUID carId = kafkaEvent.carId();
+        try {
+            Optional<Car> optionalCar = carRepository.findById(carId);
+            if (!optionalCar.isPresent()) {
+                logger.warn("Автомобиль с ID {} не найден.", carId);
+                return;
+            }
 
-        Car car = optionalCar.get();
-        car.setStatus(Status.BOOKED);
-        carRepository.save(car);
-        System.out.println(car.getStatus());
-        kafkaSenderCar.reservedCarEvent(new Event(carId));
-    }*/
+            Car car = optionalCar.get();
+            car.setStatus(Status.FREE);
+            carRepository.save(car);
+            logger.info("Статус автомобиля {} обновлен на {}", carId, car.getStatus());
 
-
+        } catch (Exception e) {
+            logger.error("Ошибка при отмене бронирования для автомобиля с ID: {}", carId, e);
+        }
+    }
 }

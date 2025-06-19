@@ -10,16 +10,12 @@ import java.util.List;
 
 public class BookingMapper {
 
-    public static Booking createBooking(CreateBooking createBooking) {
-        Booking booking = new Booking();
-        return booking;
-    }
-
     public static GetBooking getBooking(Booking booking) {
         return new GetBooking(
                 booking.getId(),
                 booking.getCreateDate(),
                 booking.getEditDate(),
+                booking.getStatusBooking(),
                 booking.getUserId(),
                 booking.getCarId()
         );
@@ -31,5 +27,4 @@ public class BookingMapper {
                 pagination
         );
     }
-
 }

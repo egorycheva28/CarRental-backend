@@ -1,6 +1,6 @@
 package com.example.paymentservice.security.jwt;
 
-import com.example.carservice.security.jwt.JwtUtils;
+import com.example.paymentservice.security.jwt.JwtUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

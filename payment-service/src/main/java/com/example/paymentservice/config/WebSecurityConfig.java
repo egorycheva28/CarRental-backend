@@ -1,8 +1,7 @@
-package com.example.carservice.security;
+package com.example.paymentservice.config;
 
-import com.example.carservice.security.jwt.AuthEntryPointJwt;
-import com.example.carservice.security.jwt.AuthTokenFilter;
-//import com.example.security.services.UserDetailsServiceImpl;
+import com.example.paymentservice.security.jwt.AuthEntryPointJwt;
+import com.example.paymentservice.security.jwt.AuthTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

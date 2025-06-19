@@ -6,6 +6,8 @@ import com.example.paymentservice.dto.response.ListPayments;
 import com.example.paymentservice.dto.response.SuccessResponse;
 import com.example.paymentservice.exception.PaginationException;
 import com.example.paymentservice.exception.PaymentNotFoundException;
+import com.example.paymentservice.kafka.KafkaEvent;
+import com.example.paymentservice.kafka.KafkaSenderPayment;
 import com.example.paymentservice.mapper.PaymentMapper;
 import com.example.paymentservice.model.Payment;
 import com.example.paymentservice.model.StatusPayment;
@@ -16,11 +18,9 @@ import lombok.RequiredArgsConstructor;
 import com.example.paymentservice.security.jwt.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,6 +29,7 @@ import java.util.UUID;
 public class PaymentServiceImpl implements PaymentService {
 
     private final PaymentRepository paymentRepository;
+    private final KafkaSenderPayment kafkaSenderPayment;
 
     @Autowired
     private HttpServletRequest request;
@@ -106,7 +107,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public SuccessResponse statusPaid(UUID paymentId) {
+    public SuccessResponse doPayment(UUID paymentId) {
         Payment payment = paymentRepository.findById(paymentId)
                 .orElseThrow(() -> new PaymentNotFoundException("Такого платежа нет!"));
 
@@ -115,11 +116,11 @@ public class PaymentServiceImpl implements PaymentService {
         paymentRepository.save(payment);
 
         //отправка в кафку события на смену статусов у машины и у брони на арендована
-
-        return new SuccessResponse("sc");
+//kafkaSenderPayment.doPayment();
+        return new SuccessResponse("Платёж успешно оплачен!");
     }
 
-    //отмена неоплаченного платежа
+    @Override
     public SuccessResponse cancelPayment(UUID paymentId) {
         UUID userId = JwtUtils.getUserIdFromRequest(request);
 
@@ -134,8 +135,7 @@ public class PaymentServiceImpl implements PaymentService {
         payment.setEditDate(LocalDateTime.now());
         paymentRepository.save(payment);
 
-
-        //отправка в кафку события на смену статусов у машины и у брони на арендована
+        kafkaSenderPayment.cancelPayment(new KafkaEvent(null, payment.getBookingId(), paymentId, userId));
         return new SuccessResponse("Неоплаченный платёж успешно отменён!");
     }
 }
