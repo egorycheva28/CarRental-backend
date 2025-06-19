@@ -1,0 +1,2 @@
+ALTER TABLE bookings
+ADD COLUMN status_booking VARCHAR NOT NULL;
