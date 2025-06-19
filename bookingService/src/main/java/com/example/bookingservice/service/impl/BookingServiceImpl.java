@@ -93,8 +93,8 @@ public class BookingServiceImpl implements BookingService {
         booking.setEditDate(LocalDateTime.now());
         bookingRepository.save(booking);
 
-        // отправляем в кафку событие
         kafkaSenderBooking.completeBooking(new KafkaEvent(booking.getCarId(), bookingId, null, userId));
+
         return new SuccessResponse("Аренда успешно завершена!");
     }
 

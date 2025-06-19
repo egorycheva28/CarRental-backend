@@ -12,14 +12,10 @@ public class KafkaSenderCar {
     private final KafkaTemplate<String, KafkaEvent> kafkaTemplate;
 
     public void reservedCarEvent(KafkaEvent kafkaEvent) {
-        sendEventBooking("booking1-topik", kafkaEvent);
+        sendEvent("booking1-topik", kafkaEvent);
     }
 
-    private void sendEventBooking(String topic, KafkaEvent kafkaEvent) {
-        kafkaTemplate.send(topic, kafkaEvent);
-    }
-
-    private void sendEventPayment(String topic, KafkaEvent kafkaEvent) {
+    private void sendEvent(String topic, KafkaEvent kafkaEvent) {
         kafkaTemplate.send(topic, kafkaEvent);
     }
 }

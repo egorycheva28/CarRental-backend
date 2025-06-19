@@ -87,4 +87,25 @@ public class KafkaListenerCar {
             logger.error("Ошибка при аренде автомобиля с ID: {}", carId, e);
         }
     }
+
+    @KafkaListener(topics = "booking1-topik", groupId = "car-group", containerFactory = "kafkaListenerContainerFactoryCar")
+
+    public void completeBooking(KafkaEvent kafkaEvent) {
+        UUID carId = kafkaEvent.carId();
+        try {
+            Optional<Car> optionalCar = carRepository.findById(carId);
+            if (!optionalCar.isPresent()) {
+                logger.warn("Автомобиль с ID {} не найден.", carId);
+                return;
+            }
+
+            Car car = optionalCar.get();
+            car.setStatus(Status.FREE);
+            carRepository.save(car);
+            logger.info("Статус автомобиля {} обновлен на {}", carId, car.getStatus());
+
+        } catch (Exception e) {
+            logger.error("Ошибка при завершении аренды автомобиля с ID: {}", carId, e);
+        }
+    }
 }
