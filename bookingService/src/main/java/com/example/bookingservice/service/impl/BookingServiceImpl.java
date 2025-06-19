@@ -164,7 +164,7 @@ public class BookingServiceImpl implements BookingService {
                 if (userId.equals(booking.getUserId()) && carId.equals(booking.getCarId())) {
                     filterBookings.add(BookingMapper.getBooking(booking));
                 }
-            } else if (userId == null && carId.equals(booking.getCarId())) {
+            } else if (userId == null && (carId == null || carId.equals(booking.getCarId()))) {
                 filterBookings.add(BookingMapper.getBooking(booking));
             } else if (carId == null && userId.equals(booking.getUserId())) {
                 filterBookings.add(BookingMapper.getBooking(booking));
