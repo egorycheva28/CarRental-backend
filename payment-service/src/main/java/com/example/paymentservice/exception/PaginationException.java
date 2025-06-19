@@ -1,4 +1,4 @@
-package com.example.exception;
+package com.example.paymentservice.exception;
 
 public class PaginationException extends RuntimeException {
     public PaginationException(String message) {
