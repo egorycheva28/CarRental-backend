@@ -103,6 +103,7 @@ public class BookingServiceImpl implements BookingService {
     @Scheduled(fixedRate = 600000)
     public void cancelBooking() {
         UUID userId = JwtUtils.getUserIdFromRequest(request);
+        String email = JwtUtils.getUserEmailFromRequest(request);
 
         List<Booking> bookings = (List<Booking>) bookingRepository.findAll();
         LocalDateTime now = LocalDateTime.now();
@@ -116,8 +117,8 @@ public class BookingServiceImpl implements BookingService {
                     booking.setStatusBooking(StatusBooking.CANCELLED);
                     bookingRepository.save(booking);
 
-                    // Отправляем событие в Kafka
-
+                    kafkaSenderBooking.cancelBooking1(new KafkaEvent(booking.getCarId(), booking.getId(), booking.getPaymentId(), userId, email));
+                    kafkaSenderBooking.cancelBooking2(new KafkaEvent(booking.getCarId(), booking.getId(), booking.getPaymentId(), userId, email));
                 }
             }
         }

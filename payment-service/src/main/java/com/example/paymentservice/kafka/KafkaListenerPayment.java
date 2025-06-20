@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 @RequiredArgsConstructor
 public class KafkaListenerPayment {
@@ -29,6 +31,26 @@ public class KafkaListenerPayment {
 
         paymentRepository.save(payment);
         logger.info("Платёж c ID: {} успешно сохранён", payment.getId());
+    }
+
+    @KafkaListener(topics = "cancelBookingTopik1", groupId = "car-group", containerFactory = "kafkaListenerContainerFactoryPayment")
+
+    public void cancelBooking(KafkaEvent kafkaEvent) {
+        try {
+            Optional<Payment> optionalPayment = paymentRepository.findById(kafkaEvent.paymentId());
+            if (!optionalPayment.isPresent()) {
+                logger.warn("Платеж с ID {} не найден.", kafkaEvent.paymentId());
+                return;
+            }
+
+            Payment payment = optionalPayment.get();
+            payment.setStatusPayment(StatusPayment.CANCELLED);
+            paymentRepository.save(payment);
+
+            logger.info("Платёж c ID: {} успешно отменен", payment.getId());
+        } catch (Exception e) {
+            logger.error("Ошибка при отмене платежа с ID: {}", kafkaEvent.paymentId(), e);
+        }
     }
 
 }
