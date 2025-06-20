@@ -6,6 +6,7 @@ public record KafkaEvent(
         UUID carId,
         UUID bookingId,
         UUID paymentId,
-        UUID userId
+        UUID userId,
+        String email
 ) {
 }

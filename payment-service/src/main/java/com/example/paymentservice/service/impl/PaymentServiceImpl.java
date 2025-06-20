@@ -109,6 +109,7 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public SuccessResponse doPayment(UUID paymentId) {
         UUID userId = JwtUtils.getUserIdFromRequest(request);
+        String email = JwtUtils.getUserEmailFromRequest(request);
 
         Payment payment = paymentRepository.findById(paymentId)
                 .orElseThrow(() -> new PaymentNotFoundException("Такого платежа нет!"));
@@ -117,7 +118,7 @@ public class PaymentServiceImpl implements PaymentService {
         payment.setEditDate(LocalDateTime.now());
         paymentRepository.save(payment);
 
-        kafkaSenderPayment.doPayment(new KafkaEvent(null, payment.getBookingId(), paymentId, userId));
+        kafkaSenderPayment.doPayment(new KafkaEvent(null, payment.getBookingId(), paymentId, userId, email));
 
         return new SuccessResponse("Платёж успешно оплачен!");
     }
@@ -125,6 +126,7 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public SuccessResponse cancelPayment(UUID paymentId) {
         UUID userId = JwtUtils.getUserIdFromRequest(request);
+        String email = JwtUtils.getUserEmailFromRequest(request);
 
         Payment payment = paymentRepository.findById(paymentId)
                 .orElseThrow(() -> new PaymentNotFoundException("Такого платежа нет!"));
@@ -137,7 +139,7 @@ public class PaymentServiceImpl implements PaymentService {
         payment.setEditDate(LocalDateTime.now());
         paymentRepository.save(payment);
 
-        kafkaSenderPayment.cancelPayment(new KafkaEvent(null, payment.getBookingId(), paymentId, userId));
+        kafkaSenderPayment.cancelPayment(new KafkaEvent(null, payment.getBookingId(), paymentId, userId, email));
         return new SuccessResponse("Неоплаченный платёж успешно отменён!");
     }
 }

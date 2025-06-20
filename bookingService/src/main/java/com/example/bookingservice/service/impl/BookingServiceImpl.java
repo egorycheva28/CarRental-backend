@@ -55,6 +55,7 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public UUID createBooking(CreateBooking createBooking) {
         UUID userId = JwtUtils.getUserIdFromRequest(request);
+        String email = JwtUtils.getUserEmailFromRequest(request);
 
         CarDto carDto = carServiceFake.getCarById(createBooking.carId());
 
@@ -73,7 +74,7 @@ public class BookingServiceImpl implements BookingService {
 
         bookingRepository.save(booking);
 
-        kafkaSenderBooking.createBooking(new KafkaEvent(booking.getCarId(), booking.getId(), booking.getPaymentId(), userId));
+        kafkaSenderBooking.createBooking(new KafkaEvent(booking.getCarId(), booking.getId(), booking.getPaymentId(), userId, email));
 
         return booking.getId();
     }
@@ -81,6 +82,7 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public SuccessResponse completeBooking(UUID bookingId) {
         UUID userId = JwtUtils.getUserIdFromRequest(request);
+        String email = JwtUtils.getUserEmailFromRequest(request);
 
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new BookingNotFoundException("Аренда не найдена!"));
@@ -93,7 +95,7 @@ public class BookingServiceImpl implements BookingService {
         booking.setEditDate(LocalDateTime.now());
         bookingRepository.save(booking);
 
-        kafkaSenderBooking.completeBooking(new KafkaEvent(booking.getCarId(), bookingId, null, userId));
+        kafkaSenderBooking.completeBooking(new KafkaEvent(booking.getCarId(), bookingId, null, userId, email));
 
         return new SuccessResponse("Аренда успешно завершена!");
     }

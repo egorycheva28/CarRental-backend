@@ -38,7 +38,7 @@ public class KafkaListenerCar {
             carRepository.save(car);
             logger.info("Статус автомобиля с ID {} обновлен на {}", carId, car.getStatus());
 
-            kafkaSenderCar.reservedCarEvent(new KafkaEvent(carId, kafkaEvent.bookingId(), null, kafkaEvent.userId()));
+            kafkaSenderCar.reservedCarEvent(new KafkaEvent(carId, kafkaEvent.bookingId(), null, kafkaEvent.userId(), kafkaEvent.email()));
             logger.info("Отправлено событие о бронировании для автомобиля с ID: {}", carId);
 
         } catch (Exception e) {

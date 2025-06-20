@@ -42,7 +42,7 @@ public class KafkaListenerBooking {
 
         logger.info("Обновлен статус бронирования ID {} на {}", bookingId, StatusBooking.BOOKED);
 
-        kafkaSenderBooking.createPayment(new KafkaEvent(kafkaEvent.carId(), bookingId, kafkaEvent.paymentId(), kafkaEvent.userId()));
+        kafkaSenderBooking.createPayment(new KafkaEvent(kafkaEvent.carId(), bookingId, kafkaEvent.paymentId(), kafkaEvent.userId(), kafkaEvent.email()));
         logger.info("Создано событие оплаты для бронирования ID {} и paymentId {}", bookingId, kafkaEvent.paymentId());
 
         logger.info("Процесс резервирования завершен для carId: {}", kafkaEvent.carId());
@@ -68,7 +68,7 @@ public class KafkaListenerBooking {
         logger.info("Обновлен статус бронирования ID {} на {}", bookingId, StatusBooking.CANCELLED);
 
         logger.info("Отправляем сообщение автомобилю об отмене платежа для бронирования с ID {}", bookingId);
-        kafkaSenderBooking.cancelPayment(new KafkaEvent(booking.getCarId(), bookingId, kafkaEvent.paymentId(), kafkaEvent.userId()));
+        kafkaSenderBooking.cancelPayment(new KafkaEvent(booking.getCarId(), bookingId, kafkaEvent.paymentId(), kafkaEvent.userId(), kafkaEvent.email()));
 
         logger.info("Обработка отмены платежа завершена для бронирования с ID {}", bookingId);
         return kafkaEvent.bookingId();
@@ -93,7 +93,7 @@ public class KafkaListenerBooking {
         logger.info("Обновлен статус бронирования ID {} на {}", bookingId, StatusBooking.RENTED);
 
         logger.info("Отправляем сообщение автомобилю об аренде для бронирования c ID{}", bookingId);
-        kafkaSenderBooking.doPayment(new KafkaEvent(booking.getCarId(), bookingId, kafkaEvent.paymentId(), kafkaEvent.userId()));
+        kafkaSenderBooking.doPayment(new KafkaEvent(booking.getCarId(), bookingId, kafkaEvent.paymentId(), kafkaEvent.userId(), kafkaEvent.email()));
 
         logger.info("Обработка аренды завершена для бронирования с ID{}", bookingId);
         return kafkaEvent.bookingId();
