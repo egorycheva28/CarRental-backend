@@ -88,7 +88,7 @@ public class KafkaListenerCar {
         }
     }
 
-    @KafkaListener(topics = "booking1-topik", groupId = "car-group", containerFactory = "kafkaListenerContainerFactoryCar")
+    @KafkaListener(topics = "booking10-topik", groupId = "car-group", containerFactory = "kafkaListenerContainerFactoryCar")
 
     public void completeBooking(KafkaEvent kafkaEvent) {
         UUID carId = kafkaEvent.carId();

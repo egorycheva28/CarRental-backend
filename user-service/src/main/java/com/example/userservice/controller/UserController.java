@@ -32,7 +32,7 @@ public class UserController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("profile/{id}")
-    @Operation(summary = "Просмотр профиля по id", description = "для админа")
+    @Operation(summary = "Просмотр профиля по id (для админа)")
     public GetUser getProfileById(@PathVariable(name = "id") UUID userId) {
         return userService.getProfileById(userId);
     }

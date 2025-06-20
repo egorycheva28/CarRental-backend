@@ -16,7 +16,7 @@ public class KafkaSenderBooking {
     }
 
     public void completeBooking(KafkaEvent kafkaEvent) {
-        sendEvent("booking1-topik", kafkaEvent);
+        sendEvent("booking10-topik", kafkaEvent);
     }
 
     public void cancelBooking(KafkaEvent kafkaEvent) {

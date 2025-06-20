@@ -50,7 +50,7 @@ public class BookingController {
 
     @GetMapping("/history/booking")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @Operation(summary = "Получение истории бронирования конкретного автомобиля или пользователя", description = "для админа")
+    @Operation(summary = "Получение истории бронирования конкретного автомобиля или пользователя (для админа)")
     public ListBookings getBookingHistory(@RequestParam(value = "userId", required = false) UUID userId, @RequestParam(value = "carId", required = false) UUID carId, Long size, Long current) {
         return bookingService.getBookingHistory(userId, carId, size, current);
     }

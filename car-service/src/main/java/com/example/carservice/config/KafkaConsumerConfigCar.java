@@ -27,7 +27,7 @@ public class KafkaConsumerConfigCar {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         configProps.put(ConsumerConfig.GROUP_ID_CONFIG, "car-group");
-        configProps.put(JsonDeserializer.TRUSTED_PACKAGES, "com.example.kafka");
+        configProps.put(JsonDeserializer.TRUSTED_PACKAGES, "com.example.carservice.kafka");
         configProps.put(JsonDeserializer.VALUE_DEFAULT_TYPE, KafkaEvent.class.getName());
         configProps.put(JsonDeserializer.USE_TYPE_INFO_HEADERS, false);
 

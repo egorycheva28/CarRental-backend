@@ -23,7 +23,7 @@ public class KafkaListenerPayment {
 
     private static final Logger logger = LoggerFactory.getLogger(KafkaListenerPayment.class);
 
-    @KafkaListener(topics = "payment1-topik", groupId = "car-group", containerFactory = "kafkaListenerContainerFactoryBooking")
+    @KafkaListener(topics = "payment1-topik", groupId = "car-group", containerFactory = "kafkaListenerContainerFactoryPayment")
 
     public void createPayment(KafkaEvent kafkaEvent) {
 

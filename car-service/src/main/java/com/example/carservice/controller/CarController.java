@@ -25,34 +25,34 @@ public class CarController {
     private final CarService carService;
 
     @GetMapping()
-    @Operation(summary = "Просмотр информации о машинах", description = "для админа")
+    @Operation(summary = "Просмотр информации о машинах")
     public ListCars getCars(@RequestParam(value = "statusCar", required = false) Status statusCar, Long size, Long current) {
         return carService.getCars(statusCar, size, current);
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Просмотр информации о машине по id", description = "для админа")
+    @Operation(summary = "Просмотр информации о машине по id")
     public GetCar getCarById(@PathVariable(name = "id") UUID carId) {
         return carService.getCarById(carId);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/create")
-    @Operation(summary = "Добавление машины", description = "для админа")
+    @Operation(summary = "Добавление машины (для админа)")
     public UUID createCar(Authentication authentication, @RequestBody CreateCar createCar) {
         return carService.createCar(authentication, createCar);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PatchMapping("/edit/{id}")
-    @Operation(summary = "Редактирование информации о машине", description = "для админа")
+    @Operation(summary = "Редактирование информации о машине (для админа)")
     public SuccessResponse editCar(@PathVariable(name = "id") UUID carId, @RequestBody EditCar editCar) {
         return carService.editCar(carId, editCar);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
-    @Operation(summary = "Смена статуса машины на 'на рамонте'", description = "для админа")
+    @Operation(summary = "Смена статуса машины на 'на рамонте' (для админа)")
     public SuccessResponse statusRapair(@PathVariable(name = "id") UUID carId, Status status) {
         return carService.statusRepair(carId, status);
     }

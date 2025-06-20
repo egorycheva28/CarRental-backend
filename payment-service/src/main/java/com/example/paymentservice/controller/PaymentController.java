@@ -23,7 +23,7 @@ public class PaymentController {
 
     @GetMapping("/allPayment")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @Operation(summary = "Получение списка платежей", description = "для админа")
+    @Operation(summary = "Получение списка платежей (для админа)")
     public ListPayments getAllPayments(@RequestParam(value = "statusPayment", required = false) StatusPayment statusPayment, Long size, Long current) {
         return paymentService.getAllPayments(statusPayment, size, current);
     }

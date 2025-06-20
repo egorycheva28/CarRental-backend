@@ -17,6 +17,10 @@ public class KafkaTopicCar {
         return TopicBuilder.name("booking1-topik").build();
     }
     @Bean
+    public NewTopic bookingtopik10() {
+        return TopicBuilder.name("booking10-topik").build();
+    }
+    @Bean
     public NewTopic bookingtopik2() {
         return TopicBuilder.name("booking2-topik").build();
     }
