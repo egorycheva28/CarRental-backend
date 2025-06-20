@@ -11,23 +11,19 @@ import org.springframework.context.annotation.Configuration;
 public class Gateway {
 
     @Bean
-    public RouteLocator myRoutes(RouteLocatorBuilder builder) {
+    public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route("user-service", p -> p
                         .path("/auth/**", "/user/**")
-                        .filters(f -> f.addRequestHeader("Hello", "World"))
                         .uri("http://localhost:8080"))
                 .route("car-service", p -> p
                         .path("/car/**")
-                        //.filters(f -> f.addRequestHeader("Hello", "World"))
                         .uri("http://localhost:8082"))
                 .route("booking-service", p -> p
                         .path("/booking/**")
-                        //.filters(f -> f.addRequestHeader("Hello", "World"))
                         .uri("http://localhost:8083"))
                 .route("payment-service", p -> p
                         .path("/payment/**")
-                        //.filters(f -> f.addRequestHeader("Hello", "World"))
                         .uri("http://localhost:8084"))
                 .build();
     }
