@@ -4,7 +4,6 @@ import com.example.userservice.dto.requests.RegisterUser;
 import com.example.userservice.dto.response.GetToken;
 import com.example.userservice.exception.LoginException;
 import com.example.userservice.exception.RegisterException;
-import com.example.userservice.exception.UserNotFoundException;
 import com.example.userservice.model.RefreshToken;
 import com.example.userservice.model.Role;
 import com.example.userservice.model.Roles;
@@ -61,31 +60,10 @@ public class AuthServiceImplTest {
         MockitoAnnotations.openMocks(this);
     }
 
-    /*@Test
-    public void registerUser_Success() {
-        RegisterUser registerUser = new RegisterUser("test@example.com", "password", "1234567890", Set.of(new Role("ROLE_USER")));
-
-        when(userRepository.existsByEmail(registerUser.email())).thenReturn(false);
-        when(userRepository.existsByPhone(registerUser.phone())).thenReturn(false);
-        when(roleRepository.findByRole(Roles.valueOf(anyString()))).thenReturn(Optional.of(new Role()));
-
-        UserDetails mockUserDetails = mock(UserDetails.class);
-        when(mockUserDetails.getAuthorities()).thenReturn(null);
-        when(authenticationManager.authenticate(any())).thenReturn(mock(Authentication.class));
-        when(jwtUtils.generateJwtToken(any())).thenReturn("mockAccessToken");
-        when(refreshTokenService.createRefreshToken(any())).thenReturn(new RefreshToken());
-
-        GetToken token = authService.registerUser(registerUser);
-
-        assertEquals("mockAccessToken", token.accessToken());
-        assertEquals("mockRefreshToken", token.refreshToken());
-
-        verify(userRepository).save(any(User.class));
-    }
-
     @Test
     public void registerUser_EmailExists() {
-        RegisterUser registerUser = new RegisterUser("test@example.com", "password", "1234567890", Set.of(new Role("ROLE_USER")));
+
+        RegisterUser registerUser = new RegisterUser("sasha1", "sasha2", "sasha3", 5L, "89467588475", "test@example.com", "password", Set.of(new Role()));
 
         when(userRepository.existsByEmail(registerUser.email())).thenReturn(true);
 
@@ -97,22 +75,21 @@ public class AuthServiceImplTest {
     }
 
     @Test
-    public void loginUser_Success() {
-        LoginUser loginUser = new LoginUser("test@example.com", "password");
+    public void registerUser_PhoneExists() {
 
-        when(authenticationManager.authenticate(any())).thenReturn(mock(Authentication.class));
-        when(userRepository.findByEmail(loginUser.email())).thenReturn(Optional.of(new User()));
-        when(jwtUtils.generateJwtToken(any())).thenReturn("mockAccessToken");
-        when(refreshTokenService.createRefreshToken(any())).thenReturn(new RefreshToken());
+        RegisterUser registerUser = new RegisterUser("sasha1", "sasha2", "sasha3", 5L, "89467588475", "test@example.com", "password", Set.of(new Role()));
 
-        GetToken token = authService.loginUser(loginUser);
+        when(userRepository.existsByPhone(registerUser.phone())).thenReturn(true);
 
-        assertEquals("mockAccessToken", token.accessToken());
-        assertEquals("mockRefreshToken", token.refreshToken());
-    }*/
+        RegisterException exception = assertThrows(RegisterException.class, () -> {
+            authService.registerUser(registerUser);
+        });
+
+        assertEquals("Пользователь с таким номером телефона уже есть!", exception.getMessage());
+    }
 
     @Test
-    public void loginUser_UserNotFound() {
+    public void loginUser_PasswordWrong() {
         LoginUser loginUser = new LoginUser("test@example.com", "password");
 
         when(authenticationManager.authenticate(any())).thenThrow(new BadCredentialsException(""));
