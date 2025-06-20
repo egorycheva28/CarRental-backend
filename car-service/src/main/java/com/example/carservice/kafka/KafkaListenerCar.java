@@ -20,7 +20,7 @@ public class KafkaListenerCar {
     private final KafkaSenderCar kafkaSenderCar;
     private static final Logger logger = LoggerFactory.getLogger(KafkaListenerCar.class);
 
-    @KafkaListener(topics = "booking-topik", groupId = "car-group", containerFactory = "kafkaListenerContainerFactoryCar")
+    @KafkaListener(topics = "createBookingTopik", groupId = "car-group", containerFactory = "kafkaListenerContainerFactoryCar")
 
     public void createBooking(KafkaEvent kafkaEvent) {
         UUID carId = kafkaEvent.carId();
@@ -36,7 +36,7 @@ public class KafkaListenerCar {
             Car car = optionalCar.get();
             car.setStatus(Status.BOOKED);
             carRepository.save(car);
-            logger.info("Статус автомобиля {} обновлен на {}", carId, car.getStatus());
+            logger.info("Статус автомобиля с ID {} обновлен на {}", carId, car.getStatus());
 
             kafkaSenderCar.reservedCarEvent(new KafkaEvent(carId, kafkaEvent.bookingId(), null, kafkaEvent.userId()));
             logger.info("Отправлено событие о бронировании для автомобиля с ID: {}", carId);
@@ -46,7 +46,7 @@ public class KafkaListenerCar {
         }
     }
 
-    @KafkaListener(topics = "payment3-topik", groupId = "car-group", containerFactory = "kafkaListenerContainerFactoryCar")
+    @KafkaListener(topics = "cancelPayment", groupId = "car-group", containerFactory = "kafkaListenerContainerFactoryCar")
 
     public void cancelPayment(KafkaEvent kafkaEvent) {
         UUID carId = kafkaEvent.carId();
@@ -60,14 +60,14 @@ public class KafkaListenerCar {
             Car car = optionalCar.get();
             car.setStatus(Status.FREE);
             carRepository.save(car);
-            logger.info("Статус автомобиля {} обновлен на {}", carId, car.getStatus());
+            logger.info("Статус автомобиля с ID {} обновлен на {}", carId, car.getStatus());
 
         } catch (Exception e) {
             logger.error("Ошибка при отмене бронирования для автомобиля с ID: {}", carId, e);
         }
     }
 
-    @KafkaListener(topics = "payment5-topik", groupId = "car-group", containerFactory = "kafkaListenerContainerFactoryCar")
+    @KafkaListener(topics = "doPayment", groupId = "car-group", containerFactory = "kafkaListenerContainerFactoryCar")
 
     public void doPayment(KafkaEvent kafkaEvent) {
         UUID carId = kafkaEvent.carId();
@@ -81,14 +81,14 @@ public class KafkaListenerCar {
             Car car = optionalCar.get();
             car.setStatus(Status.RENTED);
             carRepository.save(car);
-            logger.info("Статус автомобиля {} обновлен на {}", carId, car.getStatus());
+            logger.info("Статус автомобиля с ID {} обновлен на {}", carId, car.getStatus());
 
         } catch (Exception e) {
             logger.error("Ошибка при аренде автомобиля с ID: {}", carId, e);
         }
     }
 
-    @KafkaListener(topics = "booking10-topik", groupId = "car-group", containerFactory = "kafkaListenerContainerFactoryCar")
+    @KafkaListener(topics = "completeBookingTopik", groupId = "car-group", containerFactory = "kafkaListenerContainerFactoryCar")
 
     public void completeBooking(KafkaEvent kafkaEvent) {
         UUID carId = kafkaEvent.carId();
@@ -102,7 +102,7 @@ public class KafkaListenerCar {
             Car car = optionalCar.get();
             car.setStatus(Status.FREE);
             carRepository.save(car);
-            logger.info("Статус автомобиля {} обновлен на {}", carId, car.getStatus());
+            logger.info("Статус автомобиля с ID {} обновлен на {}", carId, car.getStatus());
 
         } catch (Exception e) {
             logger.error("Ошибка при завершении аренды автомобиля с ID: {}", carId, e);

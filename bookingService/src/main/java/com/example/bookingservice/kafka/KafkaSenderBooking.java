@@ -12,27 +12,27 @@ public class KafkaSenderBooking {
     private final KafkaTemplate<String, KafkaEvent> kafkaTemplate;
 
     public void createBooking(KafkaEvent kafkaEvent) {
-        sendEvent("booking-topik", kafkaEvent);
+        sendEvent("createBookingTopik", kafkaEvent);
     }
 
     public void completeBooking(KafkaEvent kafkaEvent) {
-        sendEvent("booking10-topik", kafkaEvent);
+        sendEvent("completeBookingTopik", kafkaEvent);
     }
 
     public void cancelBooking(KafkaEvent kafkaEvent) {
-        sendEvent("booking2-topik", kafkaEvent);
+        sendEvent("cancelBookingTopik", kafkaEvent);
     }
 
     public void createPayment(KafkaEvent kafkaEvent) {
-        sendEvent("payment1-topik", kafkaEvent);
+        sendEvent("createPaymentTopik", kafkaEvent);
     }
 
     public void cancelPayment(KafkaEvent kafkaEvent) {
-        sendEvent("payment3-topik", kafkaEvent);
+        sendEvent("cancelPayment", kafkaEvent);
     }
 
     public void doPayment(KafkaEvent kafkaEvent) {
-        sendEvent("payment5-topik", kafkaEvent);
+        sendEvent("doPayment", kafkaEvent);
     }
 
     private void sendEvent(String topic, KafkaEvent kafkaEvent) {

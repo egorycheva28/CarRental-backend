@@ -13,11 +13,11 @@ public class KafkaSenderPayment {
     private final KafkaTemplate<String, KafkaEvent> kafkaTemplateBooking;
 
     public void doPayment(KafkaEvent kafkaEvent) {
-        sendEventBooking("payment4-topik", kafkaEvent);
+        sendEventBooking("doPaymentTopik", kafkaEvent);
     }
 
     public void cancelPayment(KafkaEvent kafkaEvent) {
-        sendEventBooking("payment2-topik", kafkaEvent);
+        sendEventBooking("cancelPaymentTopik", kafkaEvent);
     }
 
     private void sendEventBooking(String topic, KafkaEvent kafkaEvent) {

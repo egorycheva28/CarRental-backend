@@ -20,7 +20,7 @@ public class KafkaListenerBooking {
     private final BookingRepository bookingRepository;
     private static final Logger logger = LoggerFactory.getLogger(KafkaListenerBooking.class);
 
-    @KafkaListener(topics = "booking1-topik", groupId = "car-group", containerFactory = "kafkaListenerContainerFactoryBooking")
+    @KafkaListener(topics = "reservedBookingTopik", groupId = "car-group", containerFactory = "kafkaListenerContainerFactoryBooking")
 
     public UUID reservedBooking(KafkaEvent kafkaEvent) {
         logger.info("Начинается процесс резервирования бронирования для event: {}", kafkaEvent);
@@ -39,6 +39,7 @@ public class KafkaListenerBooking {
 
         booking.setStatusBooking(StatusBooking.BOOKED);
         bookingRepository.save(booking);
+
         logger.info("Обновлен статус бронирования ID {} на {}", bookingId, StatusBooking.BOOKED);
 
         kafkaSenderBooking.createPayment(new KafkaEvent(kafkaEvent.carId(), bookingId, kafkaEvent.paymentId(), kafkaEvent.userId()));
@@ -48,54 +49,53 @@ public class KafkaListenerBooking {
         return kafkaEvent.carId();
     }
 
-    @KafkaListener(topics = "payment2-topik", groupId = "car-group", containerFactory = "kafkaListenerContainerFactoryBooking")
+    @KafkaListener(topics = "cancelPaymentTopik", groupId = "car-group", containerFactory = "kafkaListenerContainerFactoryBooking")
 
     public UUID cancelPayment(KafkaEvent kafkaEvent) {
         UUID bookingId = kafkaEvent.bookingId();
 
-        logger.info("Начинаем отмену оплаты для_bookingId={}", bookingId);
+        logger.info("Начинаем отмену оплаты для бронирования с ID {}", bookingId);
 
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> {
-                    logger.error("Бронирование не найдено для bookingId={}", bookingId);
+                    logger.error("Бронирование с ID {} не найдено", bookingId);
                     return new BookingNotFoundException("Аренда не найдена");
                 });
 
-        logger.info("Обновляем статус бронирования для bookingId={}", bookingId);
+        logger.info("Обновляем статус бронирования ID {}", bookingId);
         booking.setStatusBooking(StatusBooking.CANCELLED);
         bookingRepository.save(booking);
-        logger.info("Статус бронирования обновлён на {} для bookingId={}", StatusBooking.CANCELLED, bookingId);
+        logger.info("Обновлен статус бронирования ID {} на {}", bookingId, StatusBooking.CANCELLED);
 
-        logger.info("Отправляем сообщение автомобилю об отмене платежа для bookingId={}", bookingId);
+        logger.info("Отправляем сообщение автомобилю об отмене платежа для бронирования с ID {}", bookingId);
         kafkaSenderBooking.cancelPayment(new KafkaEvent(booking.getCarId(), bookingId, kafkaEvent.paymentId(), kafkaEvent.userId()));
 
-        logger.info("Обработка отмены платежа завершена для bookingId={}", bookingId);
+        logger.info("Обработка отмены платежа завершена для бронирования с ID {}", bookingId);
         return kafkaEvent.bookingId();
-
     }
 
-    @KafkaListener(topics = "payment4-topik", groupId = "car-group", containerFactory = "kafkaListenerContainerFactoryBooking")
+    @KafkaListener(topics = "doPaymentTopik", groupId = "car-group", containerFactory = "kafkaListenerContainerFactoryBooking")
 
     public UUID doPayment(KafkaEvent kafkaEvent) {
         UUID bookingId = kafkaEvent.bookingId();
 
-        logger.info("Начинаем аренду для_bookingId={}", bookingId);
+        logger.info("Начинаем аренду для бронирования с ID {}", bookingId);
 
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> {
-                    logger.error("Бронирование не найдено для bookingId={}", bookingId);
+                    logger.error("Бронирование с ID {} не найдено", bookingId);
                     return new BookingNotFoundException("Аренда не найдена");
                 });
 
-        logger.info("Обновляем статус бронирования для bookingId={}", bookingId);
+        logger.info("Обновляем статус бронирования ID {}", bookingId);
         booking.setStatusBooking(StatusBooking.RENTED);
         bookingRepository.save(booking);
-        logger.info("Статус бронирования обновлён на {} для bookingId={}", StatusBooking.RENTED, bookingId);
+        logger.info("Обновлен статус бронирования ID {} на {}", bookingId, StatusBooking.RENTED);
 
-        logger.info("Отправляем сообщение автомобилю об аренде для bookingId={}", bookingId);
+        logger.info("Отправляем сообщение автомобилю об аренде для бронирования c ID{}", bookingId);
         kafkaSenderBooking.doPayment(new KafkaEvent(booking.getCarId(), bookingId, kafkaEvent.paymentId(), kafkaEvent.userId()));
 
-        logger.info("Обработка аренды завершена для bookingId={}", bookingId);
+        logger.info("Обработка аренды завершена для бронирования с ID{}", bookingId);
         return kafkaEvent.bookingId();
 
     }

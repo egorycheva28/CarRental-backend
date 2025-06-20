@@ -8,36 +8,36 @@ import org.springframework.kafka.config.TopicBuilder;
 @Configuration
 public class KafkaTopicPayment {
     @Bean
-    public NewTopic bookingtopik() {
-        return TopicBuilder.name("booking-topik").build();
+    public NewTopic createBookingTopik() {
+        return TopicBuilder.name("createBookingTopik").build();
     }
     @Bean
-    public NewTopic bookingtopik1() {
-        return TopicBuilder.name("booking1-topik").build();
+    public NewTopic reservedBookingTopik() {
+        return TopicBuilder.name("reservedBookingTopik").build();
     }
     @Bean
-    public NewTopic bookingtopik2() {
-        return TopicBuilder.name("booking2-topik").build();
+    public NewTopic cancelBookingTopik() {
+        return TopicBuilder.name("cancelBookingTopik").build();
     }
     @Bean
-    public NewTopic paymenttopik1() {
-        return TopicBuilder.name("payment1-topik").build();
+    public NewTopic createPaymentTopik() {
+        return TopicBuilder.name("createPaymentTopik").build();
     }
     @Bean
-    public NewTopic paymenttopik2() {
-        return TopicBuilder.name("payment2-topik").build();
+    public NewTopic cancelPaymentTopik() {
+        return TopicBuilder.name("cancelPaymentTopik").build();
     }
     @Bean
-    public NewTopic paymenttopik3() {
-        return TopicBuilder.name("payment3-topik").build();
+    public NewTopic cancelPayment() {
+        return TopicBuilder.name("cancelPayment").build();
     }
     @Bean
-    public NewTopic paymenttopik4() {
-        return TopicBuilder.name("payment4-topik").build();
+    public NewTopic doPaymentTopik() {
+        return TopicBuilder.name("doPaymentTopik").build();
     }
     @Bean
-    public NewTopic paymenttopik5() {
-        return TopicBuilder.name("payment5-topik").build();
+    public NewTopic doPayment() {
+        return TopicBuilder.name("doPayment").build();
     }
 }
 

@@ -12,7 +12,7 @@ public class KafkaSenderCar {
     private final KafkaTemplate<String, KafkaEvent> kafkaTemplate;
 
     public void reservedCarEvent(KafkaEvent kafkaEvent) {
-        sendEvent("booking1-topik", kafkaEvent);
+        sendEvent("reservedBookingTopik", kafkaEvent);
     }
 
     private void sendEvent(String topic, KafkaEvent kafkaEvent) {
