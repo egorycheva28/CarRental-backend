@@ -1,0 +1,22 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: notification-service
+
+  mail:
+    host: smtp.mail.ru
+    port: 465
+    username: egor.masha28@list.ru
+    password: 6ejHWFjFoGn7jU0mgeaV
+    protocol: smtps
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+
+  kafka:
+    bootstrap-servers: localhost:9092
