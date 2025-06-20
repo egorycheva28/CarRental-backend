@@ -12,6 +12,7 @@ public record GetBooking(
         LocalDateTime editDate,
         StatusBooking statusBooking,
         UUID userId,
-        UUID carId
+        UUID carId,
+        UUID paymentId
 ) {
 }

@@ -83,7 +83,7 @@ public class BookingServiceImpl implements BookingService {
         UUID userId = JwtUtils.getUserIdFromRequest(request);
 
         Booking booking = bookingRepository.findById(bookingId)
-                .orElseThrow(() -> new BookingNotFoundException("Аренда не найдена"));
+                .orElseThrow(() -> new BookingNotFoundException("Аренда не найдена!"));
 
         if (!booking.getStatusBooking().equals(StatusBooking.RENTED)) {
             throw new RuntimeException("Эта бронь не оплачена!");

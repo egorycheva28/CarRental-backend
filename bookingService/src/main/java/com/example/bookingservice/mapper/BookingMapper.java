@@ -17,7 +17,8 @@ public class BookingMapper {
                 booking.getEditDate(),
                 booking.getStatusBooking(),
                 booking.getUserId(),
-                booking.getCarId()
+                booking.getCarId(),
+                booking.getPaymentId()
         );
     }
 
