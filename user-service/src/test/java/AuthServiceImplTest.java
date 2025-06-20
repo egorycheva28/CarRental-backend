@@ -62,53 +62,59 @@ public class AuthServiceImplTest {
 
     @Test
     public void registerUser_EmailExists() {
-
+        //Arrange
         RegisterUser registerUser = new RegisterUser("sasha1", "sasha2", "sasha3", 5L, "89467588475", "test@example.com", "password", Set.of(new Role()));
-
         when(userRepository.existsByEmail(registerUser.email())).thenReturn(true);
 
+        //Act
         RegisterException exception = assertThrows(RegisterException.class, () -> {
             authService.registerUser(registerUser);
         });
 
+        //Assert
         assertEquals("Пользователь с такой почтой уже есть!", exception.getMessage());
     }
 
     @Test
     public void registerUser_PhoneExists() {
-
+        //Arrange
         RegisterUser registerUser = new RegisterUser("sasha1", "sasha2", "sasha3", 5L, "89467588475", "test@example.com", "password", Set.of(new Role()));
-
         when(userRepository.existsByPhone(registerUser.phone())).thenReturn(true);
 
+        //Act
         RegisterException exception = assertThrows(RegisterException.class, () -> {
             authService.registerUser(registerUser);
         });
 
+        //Assert
         assertEquals("Пользователь с таким номером телефона уже есть!", exception.getMessage());
     }
 
     @Test
     public void loginUser_PasswordWrong() {
+        //Arrange
         LoginUser loginUser = new LoginUser("test@example.com", "password");
-
         when(authenticationManager.authenticate(any())).thenThrow(new BadCredentialsException(""));
 
+        //Act
         LoginException exception = assertThrows(LoginException.class, () -> {
             authService.loginUser(loginUser);
         });
 
+        //Assert
         assertEquals("Неправильный пароль!", exception.getMessage());
     }
 
     @Test
     public void refreshToken_Success() {
+        //Arrange
         RefreshTokenRequest refreshTokenRequest = new RefreshTokenRequest("mockRefreshToken");
-
         when(refreshTokenService.refreshToken(any())).thenReturn(new GetToken("mockAccessToken", "mockRefreshToken"));
 
+        //Act
         GetToken token = authService.refreshToken(refreshTokenRequest);
 
+        //Assert
         assertEquals("mockAccessToken", token.accessToken());
         assertEquals("mockRefreshToken", token.refreshToken());
     }

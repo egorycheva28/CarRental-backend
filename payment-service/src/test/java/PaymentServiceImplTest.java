@@ -34,8 +34,8 @@ public class PaymentServiceImplTest {
     }
 
     @Test
-    void testGetCars_NoStatus_FilterAll() {
-        // arrange
+    void getPayments_NoStatus_FilterAll() {
+        //Arrange
         UUID paymentId1 = UUID.randomUUID();
         UUID userId1 = UUID.randomUUID();
         UUID bookingId1 = UUID.randomUUID();
@@ -58,10 +58,10 @@ public class PaymentServiceImplTest {
 
         when(paymentRepository.findAll()).thenReturn(Arrays.asList(payment1, payment2));
 
-        // act
+        //Act
         ListPayments result = paymentService.getAllPayments(null, 10L, 1L);
 
-        // assert
+        //Assert
         assertNotNull(result);
         List<GetPayment> cars = result.payments();
 
@@ -84,8 +84,8 @@ public class PaymentServiceImplTest {
     }
 
     @Test
-    void testGetCars_WithStatus_FilterByStatus() {
-        // arrange
+    void getPayments_WithStatus_FilterByStatus() {
+        //Arrange
         UUID paymentId1 = UUID.randomUUID();
         UUID userId1 = UUID.randomUUID();
         UUID bookingId1 = UUID.randomUUID();
@@ -108,10 +108,10 @@ public class PaymentServiceImplTest {
 
         when(paymentRepository.findAll()).thenReturn(Arrays.asList(payment1, payment2));
 
-        // act
+        //Act
         ListPayments result = paymentService.getAllPayments(StatusPayment.NEW_PAYMENT, 10L, 1L);
 
-        // assert
+        //Assert
         assertNotNull(result);
         List<GetPayment> cars = result.payments();
 
@@ -128,8 +128,8 @@ public class PaymentServiceImplTest {
     }
 
     @Test
-    void testGetCars_Pagination_FirstPage() {
-        // arrange
+    void getPayments_Pagination_FirstPage() {
+        //Arrange
         UUID paymentId1 = UUID.randomUUID();
         UUID userId1 = UUID.randomUUID();
         UUID bookingId1 = UUID.randomUUID();
@@ -152,10 +152,10 @@ public class PaymentServiceImplTest {
 
         when(paymentRepository.findAll()).thenReturn(Arrays.asList(payment1, payment2));
 
-        // act
+        //Act
         ListPayments result = paymentService.getAllPayments(null, 1L, 1L);
 
-        // assert
+        //Assert
         assertNotNull(result);
         List<GetPayment> cars = result.payments();
 
@@ -172,8 +172,8 @@ public class PaymentServiceImplTest {
     }
 
     @Test
-    void testGetCars_Pagination_SecondPage() {
-        // arrange
+    void getPayments_Pagination_SecondPage() {
+        //Arrange
         UUID paymentId1 = UUID.randomUUID();
         UUID userId1 = UUID.randomUUID();
         UUID bookingId1 = UUID.randomUUID();
@@ -196,10 +196,10 @@ public class PaymentServiceImplTest {
 
         when(paymentRepository.findAll()).thenReturn(Arrays.asList(payment1, payment2));
 
-        // act
+        //Act
         ListPayments result = paymentService.getAllPayments(null, 1L, 2L);
 
-        // assert
+        //Assert
         assertNotNull(result);
         List<GetPayment> cars = result.payments();
 
@@ -216,8 +216,8 @@ public class PaymentServiceImplTest {
     }
 
     @Test
-    void testGetCars_RequestNonexistentPage_ShouldThrow() {
-        // arrange
+    void getPayments_RequestNonexistentPage_ShouldThrow() {
+        //Arrange
         UUID paymentId = UUID.randomUUID();
         UUID userId = UUID.randomUUID();
         UUID bookingId = UUID.randomUUID();
@@ -229,7 +229,7 @@ public class PaymentServiceImplTest {
         payment.setStatusPayment(StatusPayment.NEW_PAYMENT);
         when(paymentRepository.findAll()).thenReturn(Collections.singletonList(payment));
 
-        // act & assert
+        //Act & Assert
         assertThrows(PaginationException.class, () -> {
             paymentService.getAllPayments(StatusPayment.NEW_PAYMENT, 1L, 2L);
         });

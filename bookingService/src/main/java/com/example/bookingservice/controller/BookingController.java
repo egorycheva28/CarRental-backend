@@ -2,7 +2,6 @@ package com.example.bookingservice.controller;
 
 import com.example.bookingservice.dto.requests.CreateBooking;
 import com.example.bookingservice.dto.response.AvailabilityBookingResponse;
-//import com.example.service.BookingService;
 import com.example.bookingservice.dto.response.ListBookings;
 import com.example.bookingservice.dto.response.SuccessResponse;
 import com.example.bookingservice.service.BookingService;
@@ -10,7 +9,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;

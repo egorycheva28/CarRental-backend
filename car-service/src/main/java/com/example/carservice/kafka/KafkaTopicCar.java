@@ -32,8 +32,8 @@ public class KafkaTopicCar {
         return TopicBuilder.name("cancelPaymentTopik").build();
     }
     @Bean
-    public NewTopic cancelPayment() {
-        return TopicBuilder.name("cancelPayment").build();
+    public NewTopic cancelCarTopik() {
+        return TopicBuilder.name("cancelCarTopik").build();
     }
     @Bean
     public NewTopic doPaymentTopik() {

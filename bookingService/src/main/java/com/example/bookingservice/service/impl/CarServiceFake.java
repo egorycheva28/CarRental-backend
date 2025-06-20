@@ -1,7 +1,5 @@
 package com.example.bookingservice.service.impl;
 
-//import com.example.common.dto.CarDto;
-
 import com.example.bookingservice.dto.CarDto;
 import com.example.bookingservice.exception.CarNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;

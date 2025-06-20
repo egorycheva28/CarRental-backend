@@ -46,7 +46,7 @@ public class KafkaListenerCar {
         }
     }
 
-    @KafkaListener(topics = "cancelPayment", groupId = "car-group", containerFactory = "kafkaListenerContainerFactoryCar")
+    @KafkaListener(topics = "cancelCarTopik", groupId = "car-group", containerFactory = "kafkaListenerContainerFactoryCar")
 
     public void cancelPayment(KafkaEvent kafkaEvent) {
         UUID carId = kafkaEvent.carId();

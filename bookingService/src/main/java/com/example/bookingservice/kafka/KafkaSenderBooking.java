@@ -28,7 +28,7 @@ public class KafkaSenderBooking {
     }
 
     public void cancelPayment(KafkaEvent kafkaEvent) {
-        sendEvent("cancelPayment", kafkaEvent);
+        sendEvent("cancelCarTopik", kafkaEvent);
     }
 
     public void doPayment(KafkaEvent kafkaEvent) {

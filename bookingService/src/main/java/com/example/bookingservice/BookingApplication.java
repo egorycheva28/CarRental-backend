@@ -15,11 +15,3 @@ public class BookingApplication {
         SpringApplication.run(BookingApplication.class, args);
     }
 }
-/*@SpringBootApplication
-public class BookingApplication {
-
-    public static void main(String[] args) {
-        SpringApplication.run(BookingApplication.class, args);
-    }
-
-}*/

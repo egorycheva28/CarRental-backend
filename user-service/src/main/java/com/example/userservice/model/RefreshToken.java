@@ -26,7 +26,6 @@ public class RefreshToken {
     @Column(name = "token", nullable = false)
     private String token;
 
-    //дата истечения токена
     @NotNull(message = "Это обязательное поле")
     @Column(name = "expiry_date", nullable = false)
     private Instant expiryDate;

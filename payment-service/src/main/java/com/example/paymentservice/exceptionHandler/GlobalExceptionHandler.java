@@ -29,22 +29,4 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(errorBody, HttpStatus.BAD_REQUEST);
     }
-
-    /*@ExceptionHandler(value = LoginException.class)
-    public ResponseEntity<Map<String,Object>> handleLoginException(LoginException ex){
-        Map<String,Object> errorbody = new HashMap<>();
-        errorbody.put("error","Ошибка авторизации:");
-        errorbody.put("message", ex.getMessage());
-
-        return new ResponseEntity<>(errorbody, HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(value = RegisterException.class)
-    public ResponseEntity<Map<String,Object>> handleRegisterException(RegisterException ex){
-        Map<String,Object> errorbody = new HashMap<>();
-        errorbody.put("error","Ошибка регистрации:");
-        errorbody.put("message", ex.getMessage());
-
-        return new ResponseEntity<>(errorbody, HttpStatus.BAD_REQUEST);
-    }*/
 }

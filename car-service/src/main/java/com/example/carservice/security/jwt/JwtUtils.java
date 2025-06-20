@@ -16,43 +16,7 @@ import java.util.UUID;
 public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-    //@Value("${jwt.secret}")
-    private static String jwtSecret = "r1Wq3Y7Ql8ivrpC4A6vEgBg1kllCKCrFkwhbZUNZ6Y8=";
-
-
-
-    /*public String generateJwtToken(Authentication authentication) {
-
-        UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
-
-        List<String> roles = userPrincipal.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toList());
-
-        return Jwts.builder()
-                .setSubject(userPrincipal.getEmail())
-                .claim("userId", userPrincipal.getId())
-                .claim("roles", roles)
-                .setIssuedAt(new Date())//дата создания токена
-                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))//дата конца токена
-                .signWith(key(), SignatureAlgorithm.HS256)
-                .compact();
-    }*/
-
-    /*public String generateTokenFromUser(User user) {
-        List<String> roles = user.getRoles().stream()
-                .map(role -> role.getRole().name())
-                .collect(Collectors.toList());
-
-        return Jwts.builder()
-                .setSubject(user.getEmail())
-                .claim("userId", user.getId())
-                .claim("roles", roles)
-                .setIssuedAt(new Date())//дата создания токена
-                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))//дата конца токена
-                .signWith(key(), SignatureAlgorithm.HS256)
-                .compact();
-    }*/
+    private static String jwtSecret = "r1Wq3Y7Ql8ivrpC4A6vEgBg1kllCKCrFkwhbZUNZ6Y7=";
 
     private static Key key() {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
@@ -108,7 +72,6 @@ public class JwtUtils {
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
-        //String userId = getClaimsFromToken(token).get("userId", String.class);
         return UUID.fromString(claims.get("userId", String.class));
     }
 

@@ -5,7 +5,6 @@ spring:
   application:
     name: user-service
 
-
   jpa:
     show-sql: true
     properties:

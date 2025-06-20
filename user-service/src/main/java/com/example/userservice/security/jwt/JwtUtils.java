@@ -22,10 +22,7 @@ import io.jsonwebtoken.security.Keys;
 public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-    //@Value("${jwt.secret}")
-    private String jwtSecret = "r1Wq3Y7Ql8ivrpC4A6vEgBg1kllCKCrFkwhbZUNZ6Y8=";
-
-    //@Value("${bezkoder.app.jwtExpirationMs}")
+    private String jwtSecret = "r1Wq3Y7Ql8ivrpC4A6vEgBg1kllCKCrFkwhbZUNZ6Y7=";
     private int jwtExpirationMs = 1800000;
 
     public String generateJwtToken(Authentication authentication) {

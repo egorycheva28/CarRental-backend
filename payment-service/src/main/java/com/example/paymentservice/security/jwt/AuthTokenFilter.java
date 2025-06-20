@@ -35,7 +35,6 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             System.out.println(jwtToken);
             if (jwtToken != null && jwtUtils.validateJwtToken(jwtToken)) {
                 String email = jwtUtils.getUserEmailFromJwtToken(jwtToken);
-                //UUID id = jwtUtils.getUserId(jwtToken);
                 List<String> roles = jwtUtils.getRolesFromToken(jwtToken);
                 List<GrantedAuthority> authorities = roles.stream()
                         .map(SimpleGrantedAuthority::new)
@@ -49,11 +48,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         } catch (Exception e) {
             logger.error("Cannot set user authentication: {}", e);
         }
-        /*Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated()) {
-            String emailFromAuth = authentication.getName(); // Здесь получаем email
-            System.out.println("Authenticated email: " + emailFromAuth);
-        }*/
+
         filterChain.doFilter(request, response);
     }
 
@@ -61,7 +56,6 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         String headerAuth = request.getHeader("Authorization");
 
         if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")) {
-            System.out.println(headerAuth.substring(7));
             return headerAuth.substring(7);
         }
 

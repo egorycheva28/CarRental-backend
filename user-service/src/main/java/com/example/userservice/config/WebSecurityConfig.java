@@ -57,13 +57,10 @@ public class WebSecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                //.authorizeHttpRequests(auth ->
-                //auth.requestMatchers("/**").permitAll()
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/auth/register").permitAll()
                                 .requestMatchers("/auth/login").permitAll()
                                 .requestMatchers("/admin/profile/{id}").permitAll()
-                                //.requestMatchers("/user/profile").permitAll()
                                 .requestMatchers("/auth/refreshToken").permitAll() //refreshToken
                                 .requestMatchers("/swagger-ui.html").permitAll()
                                 .requestMatchers("/swagger-ui/**").permitAll()

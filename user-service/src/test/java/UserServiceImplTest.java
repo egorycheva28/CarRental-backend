@@ -34,7 +34,7 @@ public class UserServiceImplTest {
 
     @Test
     public void testGetProfileById_UserExists() {
-        // Arrange
+        //Arrange
         UUID userId = UUID.randomUUID();
         User user = new User();
         user.setEmail("email@example.com");
@@ -44,10 +44,10 @@ public class UserServiceImplTest {
         user.setMiddleName("Sasha3");
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
 
-        // Act
+        //Act
         GetUser result = userService.getProfileById(userId);
 
-        // Assert
+        //Assert
         assertNotNull(result);
         assertEquals(user.getId(), result.id());
         assertEquals("email@example.com", result.email());
@@ -60,15 +60,16 @@ public class UserServiceImplTest {
 
     @Test
     public void testGetProfileById_UserNotFound() {
-        // Arrange
+        //Arrange
         UUID userId = UUID.randomUUID();
         when(userRepository.findById(userId)).thenReturn(Optional.empty());
 
-        // Act & Assert
+        //Act
         Exception exception = assertThrows(UserNotFoundException.class, () -> {
             userService.getProfileById(userId);
         });
 
+        //Assert
         assertEquals("Такого пользователя нет!", exception.getMessage());
         verify(userRepository, times(1)).findById(userId);
     }

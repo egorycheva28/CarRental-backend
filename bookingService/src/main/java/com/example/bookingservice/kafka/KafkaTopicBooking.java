@@ -7,7 +7,6 @@ import org.springframework.kafka.config.TopicBuilder;
 
 @Configuration
 public class KafkaTopicBooking {
-    //куда отправляем
     @Bean
     public NewTopic createBookingTopik() {
         return TopicBuilder.name("createBookingTopik").build();
@@ -33,8 +32,8 @@ public class KafkaTopicBooking {
         return TopicBuilder.name("cancelPaymentTopik").build();
     }
     @Bean
-    public NewTopic cancelPayment() {
-        return TopicBuilder.name("cancelPayment").build();
+    public NewTopic cancelCarTopik() {
+        return TopicBuilder.name("cancelCarTopik").build();
     }
     @Bean
     public NewTopic doPaymentTopik() {

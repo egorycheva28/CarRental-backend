@@ -123,7 +123,6 @@ public class BookingServiceImpl implements BookingService {
         }
     }
 
-    //все
     @Override
     public ListBookings getUserBookingHistory(Long size, Long current) {
         UUID userId = JwtUtils.getUserIdFromRequest(request);

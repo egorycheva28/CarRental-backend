@@ -17,7 +17,5 @@ public interface UserService {
 
     SuccessResponse deactivateUser(Authentication authentication);
 
-    //SuccessResponse deleteUser(Authentication authentication);
-
     SuccessResponse editUser(EditUser data, Authentication authentication);
 }

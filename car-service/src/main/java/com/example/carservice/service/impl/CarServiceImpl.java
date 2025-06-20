@@ -76,16 +76,6 @@ public class CarServiceImpl implements CarService {
 
         Car car = CarMapper.createCar(createCar);
         car.setEmailUser(emailUser);
-        /*var errors = validator.validate(car);
-        if (!errors.isEmpty()) {
-            StringBuilder errorMessage = new StringBuilder();
-
-            for (var error : errors) {
-                errorMessage.append(error.getMessage()).append(" ");
-            }
-
-            throw new ValidationException(errorMessage.toString());
-        }*/
 
         carRepository.save(car);
         return car.getId();

@@ -57,7 +57,6 @@ public class User {
     @NotNull(message = "Почта - это обязательное поле")
     @Column(name = "email", unique = true, nullable = false)
     @Email(message = "Email не соответствует стандартной маске почты")
-    //@Pattern(regexp = "")
     private String email;
 
     @NotNull(message = "Пароль - это обязательное поле")

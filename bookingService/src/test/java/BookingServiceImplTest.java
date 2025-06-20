@@ -52,9 +52,10 @@ public class BookingServiceImplTest {
 
         when(carServiceFake.getCarById(carId)).thenReturn(carDto);
 
-        // Act & Assert
+        //Act
         AvailabilityBookingResponse response = bookingService.checkAvailability(carId);
 
+        //Assert
         assertTrue(response.availability());
     }
 
@@ -66,9 +67,10 @@ public class BookingServiceImplTest {
 
         when(carServiceFake.getCarById(carId)).thenReturn(carDto);
 
-        // Act & Assert
+        //Act
         AvailabilityBookingResponse response = bookingService.checkAvailability(carId);
 
+        //Assert
         assertFalse(response.availability());
     }
 
@@ -82,7 +84,7 @@ public class BookingServiceImplTest {
 
         when(bookingRepository.findById(bookingId)).thenReturn(Optional.of(booking));
 
-        // Act & Assert
+        //Act & Assert
         assertThrows(RuntimeException.class, () -> bookingService.completeBooking(bookingId));
     }
 
@@ -115,10 +117,10 @@ public class BookingServiceImplTest {
 
         when(bookingRepository.findAll()).thenReturn(Arrays.asList(booking1, booking2));
 
-        // act
+        //Act
         ListBookings result = bookingService.getBookingHistory(null, null, 5L, 1L);
 
-        // assert
+        //Assert
         assertNotNull(result);
         List<GetBooking> bookings = result.bookings();
 
@@ -171,10 +173,10 @@ public class BookingServiceImplTest {
 
         when(bookingRepository.findAll()).thenReturn(Arrays.asList(booking1, booking2));
 
-        // act
+        //Act
         ListBookings result = bookingService.getBookingHistory(userId1, null, 5L, 1L);
 
-        // assert
+        //Assert
         assertNotNull(result);
         List<GetBooking> bookings = result.bookings();
 
@@ -220,10 +222,10 @@ public class BookingServiceImplTest {
 
         when(bookingRepository.findAll()).thenReturn(Arrays.asList(booking1, booking2));
 
-        // act
+        //Act
         ListBookings result = bookingService.getBookingHistory(null, carId1, 5L, 1L);
 
-        // assert
+        //Assert
         assertNotNull(result);
         List<GetBooking> bookings = result.bookings();
 
@@ -269,10 +271,10 @@ public class BookingServiceImplTest {
 
         when(bookingRepository.findAll()).thenReturn(Arrays.asList(booking1, booking2));
 
-        // act
+        //Act
         ListBookings result = bookingService.getBookingHistory(userId2, carId1, 5L, 1L);
 
-        // assert
+        //Assert
         assertNotNull(result);
         List<GetBooking> bookings = result.bookings();
 
@@ -311,10 +313,10 @@ public class BookingServiceImplTest {
 
         when(bookingRepository.findAll()).thenReturn(Arrays.asList(booking1, booking2));
 
-        // act
+        //Act
         ListBookings result = bookingService.getBookingHistory(null, null, 1L, 1L);
 
-        // assert
+        //Assert
         assertNotNull(result);
         List<GetBooking> bookings = result.bookings();
 
@@ -360,10 +362,10 @@ public class BookingServiceImplTest {
 
         when(bookingRepository.findAll()).thenReturn(Arrays.asList(booking1, booking2));
 
-        // act
+        //Act
         ListBookings result = bookingService.getBookingHistory(null, null, 1L, 2L);
 
-        // assert
+        //Assert
         assertNotNull(result);
         List<GetBooking> bookings = result.bookings();
 
@@ -397,7 +399,7 @@ public class BookingServiceImplTest {
 
         when(bookingRepository.findAll()).thenReturn(Collections.singletonList(booking));
 
-        // act & assert
+        //Act & Assert
         assertThrows(PaginationException.class, () -> {
             bookingService.getBookingHistory(null, null, 1L, 20L);
         });

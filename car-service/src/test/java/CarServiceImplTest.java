@@ -35,8 +35,8 @@ public class CarServiceImplTest {
     }
 
     @Test
-    void testGetCars_NoStatus_FilterAll() {
-        // arrange
+    void getCars_NoStatus_FilterAll() {
+        //Arrange
         UUID carId1 = UUID.randomUUID();
 
         Car car1 = new Car();
@@ -57,10 +57,10 @@ public class CarServiceImplTest {
 
         when(carRepository.findAll()).thenReturn(Arrays.asList(car1, car2));
 
-        // act
+        //Act
         ListCars result = carService.getCars(null, 10L, 1L);
 
-        // assert
+        //Assert
         assertNotNull(result);
         List<GetCar> cars = result.cars();
 
@@ -83,8 +83,8 @@ public class CarServiceImplTest {
     }
 
     @Test
-    void testGetCars_WithStatus_FilterByStatus() {
-        // arrange
+    void getCars_WithStatus_FilterByStatus() {
+        //Arrange
         UUID carId1 = UUID.randomUUID();
 
         Car car1 = new Car();
@@ -105,10 +105,10 @@ public class CarServiceImplTest {
 
         when(carRepository.findAll()).thenReturn(Arrays.asList(car1, car2));
 
-        // act
+        //Act
         ListCars result = carService.getCars(Status.FREE, 10L, 1L);
 
-        // assert
+        //Assert
         assertNotNull(result);
         List<GetCar> cars = result.cars();
 
@@ -125,8 +125,8 @@ public class CarServiceImplTest {
     }
 
     @Test
-    void testGetCars_Pagination_FirstPage() {
-        // arrange
+    void getCars_Pagination_FirstPage() {
+        //Arrange
         UUID carId1 = UUID.randomUUID();
 
         Car car1 = new Car();
@@ -147,10 +147,10 @@ public class CarServiceImplTest {
 
         when(carRepository.findAll()).thenReturn(Arrays.asList(car1, car2));
 
-        // act
+        //Act
         ListCars result = carService.getCars(Status.FREE, 1L, 1L);
 
-        // assert
+        //Assert
         assertNotNull(result);
         List<GetCar> cars = result.cars();
 
@@ -165,8 +165,8 @@ public class CarServiceImplTest {
     }
 
     @Test
-    void testGetCars_Pagination_SecondPage() {
-        // arrange
+    void getCars_Pagination_SecondPage() {
+        //Arrange
         UUID carId1 = UUID.randomUUID();
 
         Car car1 = new Car();
@@ -187,10 +187,10 @@ public class CarServiceImplTest {
 
         when(carRepository.findAll()).thenReturn(Arrays.asList(car1, car2));
 
-        // act
+        //Act
         ListCars result = carService.getCars(Status.FREE, 1L, 2L);
 
-        // assert
+        //Assert
         assertNotNull(result);
         List<GetCar> cars = result.cars();
 
@@ -205,8 +205,8 @@ public class CarServiceImplTest {
     }
 
     @Test
-    void testGetCars_RequestNonexistentPage_ShouldThrow() {
-        // arrange
+    void getCars_RequestNonexistentPage_ShouldThrow() {
+        //Arrange
         UUID carId = UUID.randomUUID();
         Car car = new Car();
         car.setId(carId);
@@ -215,15 +215,15 @@ public class CarServiceImplTest {
         car.setPrice(2L);
         when(carRepository.findAll()).thenReturn(Collections.singletonList(car));
 
-        // act & assert
+        //Act & Assert
         assertThrows(PaginationException.class, () -> {
             carService.getCars(Status.FREE, 1L, 2L);
         });
     }
 
     @Test
-    public void testGetCarById_CarExists() {
-        // Arrange
+    public void getCarById_CarExists() {
+        //Arrange
         UUID carId = UUID.randomUUID();
         Car car = new Car();
         car.setName("car");
@@ -231,10 +231,10 @@ public class CarServiceImplTest {
         car.setPrice(2L);
         when(carRepository.findById(carId)).thenReturn(Optional.of(car));
 
-        // Act
+        //Act
         GetCar result = carService.getCarById(carId);
 
-        // Assert
+        //Assert
         assertNotNull(result);
         assertEquals(car.getId(), result.id());
         assertEquals("car", result.name());
@@ -245,12 +245,12 @@ public class CarServiceImplTest {
     }
 
     @Test
-    public void testGetCarById_CarNotFound() {
-        // Arrange
+    public void getCarById_CarNotFound() {
+        //Arrange
         UUID carId = UUID.randomUUID();
         when(carRepository.findById(carId)).thenReturn(Optional.empty());
 
-        // Act & Assert
+        //Act & Assert
         assertThrows(CarNotFoundException.class, () -> {
             carService.getCarById(carId);
         });
@@ -259,7 +259,8 @@ public class CarServiceImplTest {
     }
 
     @Test
-    void testEditCar_CarExists() {
+    void editCar_CarExists() {
+        //Arrange
         UUID carId = UUID.randomUUID();
         Car car = new Car();
         car.setName("car");
@@ -271,8 +272,10 @@ public class CarServiceImplTest {
         when(carRepository.findById(carId)).thenReturn(Optional.of(car));
         when(carRepository.save(any(Car.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
+        //Act
         SuccessResponse response = carService.editCar(carId, editCar);
 
+        //Assert
         assertNotNull(response);
         assertEquals("Данные о машине успешно изменены!", response.message());
         assertEquals("New car", car.getName());
@@ -284,13 +287,15 @@ public class CarServiceImplTest {
     }
 
     @Test
-    void testEditCar_CarNotFound() {
+    void editCar_CarNotFound() {
+        //Arrange
         UUID carId = UUID.randomUUID();
-
         when(carRepository.findById(carId)).thenReturn(Optional.empty());
 
+        //Act
         EditCar editCar = new EditCar("New car", 1L);
 
+        //Assert
         assertThrows(CarNotFoundException.class, () -> {
             carService.editCar(carId, editCar);
         });
@@ -300,7 +305,8 @@ public class CarServiceImplTest {
     }
 
     @Test
-    void testStatusRepair_CarExists() {
+    void statusRepair_CarExists() {
+        //Arrange
         UUID carId = UUID.randomUUID();
         Car car = new Car();
         car.setName("car");
@@ -310,8 +316,10 @@ public class CarServiceImplTest {
         when(carRepository.findById(carId)).thenReturn(Optional.of(car));
         when(carRepository.save(any(Car.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
+        //Act
         SuccessResponse response = carService.statusRepair(carId, Status.UNDER_REPAIR);
 
+        //Assert
         assertNotNull(response);
         assertEquals("Статус машины успешно изменен!", response.message());
         assertEquals(Status.UNDER_REPAIR, car.getStatus());
@@ -322,11 +330,13 @@ public class CarServiceImplTest {
     }
 
     @Test
-    void testStatusRepair_CarNotFound() {
+    void statusRepair_CarNotFound() {
+        //Arrange
         UUID carId = UUID.randomUUID();
 
         when(carRepository.findById(carId)).thenReturn(Optional.empty());
 
+        //Act && Assert
         assertThrows(CarNotFoundException.class, () -> {
             carService.statusRepair(carId, Status.UNDER_REPAIR);
         });

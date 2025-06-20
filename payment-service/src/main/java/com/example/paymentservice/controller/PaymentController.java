@@ -40,13 +40,13 @@ public class PaymentController {
         return paymentService.getPaymentById(paymentId);
     }
 
-    @PostMapping("/{paymentId}")
+    @PostMapping("/paid/{paymentId}")
     @Operation(summary = "Оплата платежа")
     public SuccessResponse doPayment(@PathVariable(name = "paymentId") UUID paymentId) {
         return paymentService.doPayment(paymentId);
     }
 
-    @PutMapping("/{paymentId}")
+    @PostMapping("/cancel/{paymentId}")
     @Operation(summary = "Отмена неоплаченного платежа")
     public SuccessResponse cancelPayment(@PathVariable(name = "paymentId") UUID paymentId) {
         return paymentService.cancelPayment(paymentId);

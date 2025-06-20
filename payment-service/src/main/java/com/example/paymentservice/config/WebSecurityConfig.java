@@ -14,8 +14,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableMethodSecurity
 public class WebSecurityConfig {
-    //@Autowired
-    //UserDetailsServiceImpl userDetailsService;
 
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
@@ -25,30 +23,19 @@ public class WebSecurityConfig {
         return new AuthTokenFilter();
     }
 
-
-
-
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                //.authorizeHttpRequests(auth ->
-                //auth.requestMatchers("/**").permitAll()
                 .authorizeHttpRequests(auth ->
-                        auth//.requestMatchers("/auth/register").permitAll()
-                                //.requestMatchers("/auth/login").permitAll()
-                                //.requestMatchers("/admin/profile/{id}").permitAll()
-                                //.requestMatchers("/user/profile").permitAll()
-                               // .requestMatchers("/auth/refreshToken").permitAll() //refreshToken
+                        auth
                                 .requestMatchers("/swagger-ui.html").permitAll()
                                 .requestMatchers("/swagger-ui/**").permitAll()
                                 .requestMatchers("/v3/api-docs/**").permitAll()
                                 .requestMatchers("/error").permitAll()
                                 .anyRequest().authenticated()
                 );
-
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
